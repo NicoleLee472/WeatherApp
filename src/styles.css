@@ -1,0 +1,86 @@
+.heading {
+  display: block;
+  margin: 20px 20px;
+  text-align: center;
+}
+
+/* search section */
+.search-block {
+  display: block;
+  max-width: 70%;
+}
+.search-input {
+  border-color: brown;
+}
+
+.search-button {
+  display: inline;
+}
+
+.btn.btn-dark.c {
+  text-align: right;
+}
+
+/* current weather */
+
+.main-icon {
+  text-align: center;
+  font-size: 50px;
+}
+.location-city {
+  font-size: 34px;
+}
+.location-country {
+  font-size: 20px;
+}
+
+.current-temp {
+  text-align: center;
+  font-size: 42px;
+  margin-top: 20px;
+}
+.today-temp {
+  font-size: 25px;
+  font-weight: bold;
+}
+.low {
+  color: rgb(118, 111, 111);
+  text-align: center;
+}
+.high {
+  text-align: center;
+}
+.today-temp.high {
+  text-align: right;
+}
+.today-temp.low {
+  text-align: left;
+}
+
+/* forecast */
+.five-day-forecast {
+  text-align: center;
+}
+.day-block {
+  font-size: 32px;
+}
+.day {
+  padding: 3px;
+}
+.icon-block {
+  font-size: 32px;
+}
+.icon {
+  padding: 3px;
+}
+.temp-block {
+  font-weight: bold;
+}
+.temp {
+  padding: 3px;
+}
+
+.col-12.date {
+  text-align: center;
+  font-size: 26px;
+}
