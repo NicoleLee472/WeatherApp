@@ -51,22 +51,22 @@ function search(event) {
 
 function displayCelsuis(event) {
   event.preventDefault()
-  temp.innerHTML = `${fToC(parseInt(temp.innerHTML.slice(0, -2), 10))}°C`
+  temp.innerHTML = `${fToC(parseInt(temp.innerHTML.slice(0, -2), 10))}°`
 }
 
 function displayFahrenheit(event) {
   event.preventDefault()
-  temp.innerHTML = `${cToF(parseInt(temp.innerHTML.slice(0, -2), 10))}°F`
+  temp.innerHTML = `${cToF(parseInt(temp.innerHTML.slice(0, -2), 10))}°`
 }
 
 //current location to appear on click
 function showCurrentTemp(response) {
   displayCity.innerHTML = response.data.name
-  temp.innerHTML = `${Math.round(response.data.main.temp)}℃`
+  temp.innerHTML = `${Math.round(response.data.main.temp)}°`
   country.innerHTML = response.data.sys.country
   currentEmoji.src = `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
-  currentHighTemp.innerHTML = `${Math.round(response.data.main.temp_max)}℃`
-  currentLowTemp.innerHTML = `${Math.round(response.data.main.temp_min)}℃`
+  currentHighTemp.innerHTML = `${Math.round(response.data.main.temp_max)}°`
+  currentLowTemp.innerHTML = `${Math.round(response.data.main.temp_min)}°`
 }
 
 function generateApiCall(position) {

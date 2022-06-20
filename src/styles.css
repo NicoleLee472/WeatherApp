@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 .heading {
   display: block;
   margin: 20px 20px;
@@ -16,28 +19,54 @@
 .search-button {
   display: inline;
 }
+.btn.btn-info.search {
+  width: 100%;
+  min-width: fit-content;
+}
 
 .btn.btn-dark.c {
   text-align: right;
 }
 
 /* current weather */
+.col-4.current-forecast {
+  text-align: left;
+  padding-bottom: 12px;
+}
 
 .main-icon {
-  text-align: center;
-  font-size: 50px;
+  text-align: left;
+  font-size: 70px;
+  padding: 0;
 }
 .location-city {
-  font-size: 34px;
+  font-size: 40px;
+  text-align: left;
+}
+.city {
+  padding-top: 20px;
 }
 .location-country {
   font-size: 20px;
+}
+.current-description {
+  font-size: 25px;
+  text-align: left;
 }
 
 .current-temp {
   text-align: center;
   font-size: 42px;
-  margin-top: 20px;
+}
+.current-temp-number {
+  font-size: 80px;
+  padding: 0;
+  text-align: right;
+}
+.feels-like {
+  font-size: 16px;
+  font-style: italic;
+  margin-top: 10px;
 }
 .today-temp {
   font-size: 25px;
@@ -51,13 +80,17 @@
   text-align: center;
 }
 .today-temp.high {
-  text-align: right;
+  text-align: center;
 }
 .today-temp.low {
-  text-align: left;
+  text-align: center;
 }
 
 /* forecast */
+.row.forecast-block {
+  text-align: center;
+}
+
 .five-day-forecast {
   text-align: center;
 }
@@ -82,5 +115,5 @@
 
 .col-12.date {
   text-align: center;
-  font-size: 26px;
+  font-size: 20px;
 }
