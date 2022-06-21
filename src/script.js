@@ -2,7 +2,6 @@ let apiKey = '18e21a300ebbb03dff744f074bc3f64f'
 let weatherUrl = `https://api.openweathermap.org/data/2.5/weather?`
 let displayCity = document.querySelector('#city')
 let searchForm = document.querySelector('form')
-let temp = document.querySelector('#current-temp')
 let convertToC = document.querySelector('#convert-to-c')
 let convertToF = document.querySelector('#convert-to-f')
 let country = document.querySelector('#country')
@@ -11,10 +10,75 @@ let currentEmoji = document.querySelector('#current-weather-emoji')
 let currentHighTemp = document.querySelector('#current-high-temp')
 let currentLowTemp = document.querySelector('#current-low-temp')
 
+let Temperatures = (function () {
+  let temperature = document.querySelector('#current-temp')
+  var celsius = 0
+  var fahrenheit = 0
+  var isCelsius = true
+  let displayTemperatures = function () {
+    if (isCelsius) {
+      temperature.innerHTML = celsius
+    } else {
+      temperature.innerHTML = fahrenheit
+    }
+  }
+  //this is like an API
+  return {
+    setCelsiusScale: function () {
+      isCelsius = true
+      displayTemperatures()
+    },
+    setFahrenheitScale: function () {
+      isCelsius = false
+      displayTemperatures()
+    },
+    setDegreesCelsius: function (degreesC) {
+      celsius = degreesC
+      fahrenheit = cToF(celsius)
+      displayTemperatures()
+    },
+  }
+})()
+
+//current location to appear on click
+function showCurrentTemp(response) {
+  Temperatures.setDegreesCelsius(response.data.main.temp)
+  displayCity.innerHTML = response.data.name
+  country.innerHTML = response.data.sys.country
+  currentEmoji.src = `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+  currentHighTemp.innerHTML = `${Math.round(response.data.main.temp_max)}°`
+  currentLowTemp.innerHTML = `${Math.round(response.data.main.temp_min)}°`
+}
+
+function generateApiCall(position) {
+  var lon = position.coords.longitude
+  var lat = position.coords.latitude
+  axios
+    .get(`${weatherUrl}lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
+    .then(showCurrentTemp)
+}
+
+function getCurrentUserGps() {
+  navigator.geolocation.getCurrentPosition(generateApiCall)
+}
+
+function preventDefault(f) {
+  return function (event) {
+    event.preventDefault()
+    f()
+  }
+}
+
 searchForm.addEventListener('submit', search)
-convertToC.addEventListener('click', displayCelsuis)
-convertToF.addEventListener('click', displayFahrenheit)
-currentLocation.addEventListener('click', getCurrentUserGPS)
+convertToC.addEventListener(
+  'click',
+  preventDefault(Temperatures.setCelsiusScale)
+)
+convertToF.addEventListener(
+  'click',
+  preventDefault(Temperatures.setFahrenheitScale)
+)
+currentLocation.addEventListener('click', getCurrentUserGps)
 
 let days = [
   'Sunday',
@@ -49,26 +113,6 @@ function search(event) {
     .then(showCurrentTemp)
 }
 
-function displayCelsuis(event) {
-  event.preventDefault()
-  temp.innerHTML = `${fToC(parseInt(temp.innerHTML.slice(0, -2), 10))}°`
-}
-
-function displayFahrenheit(event) {
-  event.preventDefault()
-  temp.innerHTML = `${cToF(parseInt(temp.innerHTML.slice(0, -2), 10))}°`
-}
-
-//current location to appear on click
-function showCurrentTemp(response) {
-  displayCity.innerHTML = response.data.name
-  temp.innerHTML = `${Math.round(response.data.main.temp)}°`
-  country.innerHTML = response.data.sys.country
-  currentEmoji.src = `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
-  currentHighTemp.innerHTML = `${Math.round(response.data.main.temp_max)}°`
-  currentLowTemp.innerHTML = `${Math.round(response.data.main.temp_min)}°`
-}
-
 function generateApiCall(position) {
   var lon = position.coords.longitude
   var lat = position.coords.latitude
@@ -77,7 +121,7 @@ function generateApiCall(position) {
     .then(showCurrentTemp)
 }
 
-function getCurrentUserGPS() {
+function getCurrentUserGps() {
   navigator.geolocation.getCurrentPosition(generateApiCall)
 }
 
