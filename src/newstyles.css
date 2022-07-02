@@ -32,8 +32,22 @@ body {
   padding: 20px 20px;
   margin: 10px auto;
   border-radius: 20px;
-  max-width: fit-content;
-  text-align: center;
+  max-width: 60%;
+  text-align: left;
   background-color: #ffffff;
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.today.today-forecast {
+  margin-top: 20px;
+}
+footer {
+  text-align: center;
+  margin: 20px auto;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
