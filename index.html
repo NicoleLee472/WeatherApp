@@ -31,127 +31,129 @@
       Date will go here
     </div>
     <br />
-    <!--Search Bar-->
-    <div class="container search">
-      <form>
-        <div class="row g-0">
-          <div class="col-1"></div>
-          <div class="col-8 mb-3">
-            <input
-              type="text"
-              class="form-control"
-              id="requested-city"
-              placeholder="Enter your city here.." />
+    <div class="main-block">
+      <!--Search Bar-->
+      <div class="container search">
+        <form>
+          <div class="row g-0">
+            <div class="col-1"></div>
+            <div class="col-8 mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="requested-city"
+                placeholder="Enter your city here.." />
+            </div>
+            <div class="col-1">
+              <button
+                type="info"
+                class="btn btn-info search"
+                id="search">
+                <img
+                  src="images/icons8-search-50.png"
+                  alt="Search"
+                  height="23px" />
+              </button>
+            </div>
+            <div class="col-1">
+              <button
+                type="info"
+                class="btn btn-dark"
+                id="current-location">
+                <img
+                  src="images/icons8-location-30.png"
+                  alt="Current Location"
+                  height="23px" />
+              </button>
+            </div>
+            <div class="col-1"></div>
           </div>
-          <div class="col-1">
-            <button
-              type="info"
-              class="btn btn-info search"
-              id="search">
-              <img
-                src="images/icons8-search-50.png"
-                alt="Search"
-                height="23px" />
-            </button>
-          </div>
-          <div class="col-1">
-            <button
-              type="info"
-              class="btn btn-dark"
-              id="current-location">
-              <img
-                src="images/icons8-location-30.png"
-                alt="Current Location"
-                height="23px" />
-            </button>
-          </div>
-          <div class="col-1"></div>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
 
-    <br />
-    <!--Unit Selector-->
-    <div class="row">
-      <div class="col-5"></div>
-      <div class="col-1">
-        <button
-          class="btn btn-dark c"
-          id="convert-to-c">
-          °C
-        </button>
-      </div>
-      <div class="col-1">
-        <button
-          class="btn btn-dark f"
-          id="convert-to-f">
-          °F
-        </button>
-      </div>
-      <div class="col-5"></div>
-    </div>
-    <!--Block with city and current temp-->
-    <div class="row">
-      <!--LHS of block, City name-->
-      <div class="col-3"></div>
-      <div class="col-3 location-city">
-        <div
-          class="col-12 city"
-          id="city">
-          Melbourne
+      <br />
+      <!--Unit Selector-->
+      <div class="row">
+        <div class="col-5"></div>
+        <div class="col-1">
+          <button
+            class="btn btn-dark c"
+            id="convert-to-c">
+            °C
+          </button>
         </div>
-        <div
-          class="col-12 location-country"
-          id="country">
-          Victoria, Australia
+        <div class="col-1">
+          <button
+            class="btn btn-dark f"
+            id="convert-to-f">
+            °F
+          </button>
         </div>
-        <div
-          class="col-12 feels-like"
-          id=""
-          feels-like>
-          Feels like 16°
-        </div>
+        <div class="col-5"></div>
       </div>
-      <!--RHS of block, Current temp, icon, description min and max-->
-      <div class="col-4 current-forecast">
-        <div class="row">
+      <!--Block with city and current temp-->
+      <div class="row">
+        <!--LHS of block, City name-->
+        <div class="col-3"></div>
+        <div class="col-3 location-city">
           <div
-            class="col-6 current-temp-number"
-            id="current-temp">
-            17°
+            class="col-12 city"
+            id="city">
+            Melbourne
           </div>
-          <div class="col-6 main-icon">
-            <img
-              src="http://openweathermap.org/img/wn/01d@2x.png"
-              alt="Weather Icon"
-              width="120px"
-              height="120px"
-              class="current-weather-emoji" />
+          <div
+            class="col-12 location-country"
+            id="country">
+            Victoria, Australia
+          </div>
+          <div
+            class="col-12 feels-like"
+            id=""
+            feels-like>
+            Feels like 16°
           </div>
         </div>
+        <!--RHS of block, Current temp, icon, description min and max-->
+        <div class="col-4 current-forecast">
+          <div class="row">
+            <div
+              class="col-6 current-temp-number"
+              id="current-temp">
+              17°
+            </div>
+            <div class="col-6 main-icon">
+              <img
+                src="http://openweathermap.org/img/wn/01d@2x.png"
+                alt="Weather Icon"
+                width="120px"
+                height="120px"
+                class="current-weather-emoji" />
+            </div>
+          </div>
 
-        <div class="row">
-          <div class="col-3"></div>
-          <div class="col-3">
-            <div class="col-12 today-temp high">Max</div>
-            <div
-              class="col-12 today-temp high"
-              id="current-high-temp">
-              25
+          <div class="row">
+            <div class="col-3"></div>
+            <div class="col-3">
+              <div class="col-12 today-temp high">Max</div>
+              <div
+                class="col-12 today-temp high"
+                id="current-high-temp">
+                25
+              </div>
             </div>
-          </div>
-          <div class="col-3">
-            <div class="col-12 today-temp low">Min</div>
-            <div
-              class="col-12 today-temp low"
-              id="current-low-temp">
-              17
+            <div class="col-3">
+              <div class="col-12 today-temp low">Min</div>
+              <div
+                class="col-12 today-temp low"
+                id="current-low-temp">
+                17
+              </div>
             </div>
+            <div class="col-3"></div>
           </div>
-          <div class="col-3"></div>
         </div>
+        <div class="col-2"></div>
       </div>
-      <div class="col-2"></div>
     </div>
     <br />
     <!--Forecast Block-->

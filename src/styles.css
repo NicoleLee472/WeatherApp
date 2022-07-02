@@ -1,6 +1,18 @@
 * {
   box-sizing: border-box;
 }
+
+body {
+  background-color: #caf0f8;
+  max-width: 80%;
+}
+
+.main-block {
+  background-color: oldlace;
+  margin: 10px auto;
+  padding: 50px, 10px;
+  align-self: center;
+}
 .heading {
   display: block;
   margin: 20px 20px;

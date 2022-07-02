@@ -1,4 +1,4 @@
-let apiKey = '18e21a300ebbb03dff744f074bc3f64f'
+/* let apiKey = '18e21a300ebbb03dff744f074bc3f64f'
 let weatherUrl = `https://api.openweathermap.org/data/2.5/weather?`
 let displayCity = document.querySelector('#city')
 let searchForm = document.querySelector('form')
@@ -80,29 +80,7 @@ convertToF.addEventListener(
 )
 currentLocation.addEventListener('click', getCurrentUserGps)
 
-let days = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-]
-let months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-]
+
 
 //display requested city on submit
 function search(event) {
@@ -124,15 +102,19 @@ function generateApiCall(position) {
 function getCurrentUserGps() {
   navigator.geolocation.getCurrentPosition(generateApiCall)
 }
-
+ */
 //display the date under the search bar
 let now = new Date()
+const options = {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}
 let displayDate = document.querySelector('#current-date')
-displayDate.innerHTML = `${days[now.getDay()]} ${now.getDate()} ${
-  months[now.getMonth()]
-}, ${now.getFullYear()}`
+displayDate.innerHTML = now.toLocaleDateString('en-AU', options)
 
-//convert Fahrenheit to Celsius
+/* //convert Fahrenheit to Celsius
 function fToC(tempInF) {
   return Math.round((5 / 9) * (tempInF - 32))
 }
@@ -140,3 +122,4 @@ function fToC(tempInF) {
 function cToF(tempInC) {
   return Math.round((tempInC * 9) / 5 + 32)
 }
+ */
