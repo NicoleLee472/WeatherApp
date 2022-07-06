@@ -6,7 +6,7 @@ let convertToC = document.querySelector('#convert-to-c')
 let convertToF = document.querySelector('#convert-to-f')
 let country = document.querySelector('#country')
 let currentLocation = document.querySelector('#current-location')
-let currentEmoji = document.querySelector('#current-weather-emoji')
+let currentEmoji = document.querySelector('#currentEmoji')
 let currentHighTemp = document.querySelector('#current-high-temp')
 let currentLowTemp = document.querySelector('#current-low-temp')
 
