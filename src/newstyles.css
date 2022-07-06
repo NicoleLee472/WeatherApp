@@ -55,3 +55,7 @@ ul {
   margin: 0;
   padding: 0;
 }
+
+small {
+  font-size: 18px;
+}
