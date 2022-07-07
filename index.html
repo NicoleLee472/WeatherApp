@@ -20,42 +20,30 @@
       href="src/styles.css" />
   </head>
   <body>
-    <!--Page Title-->
-    <div class="sticky-top">
-      <h1 class="heading">Whats the weather?</h1>
-    </div>
-    <!--Day and date-->
-    <div
-      class="col-12 date"
-      id="current-date">
-      Date will go here
-    </div>
-    <br />
-    <div class="main-block">
-      <!--Search Bar-->
-      <div class="container search">
-        <form>
-          <div class="row g-0">
-            <div class="col-1"></div>
-            <div class="col-8 mb-3">
-              <input
-                type="text"
-                class="form-control"
-                id="requested-city"
-                placeholder="Enter your city here.." />
-            </div>
-            <div class="col-1">
+    <div class="header">
+      <h1>Whats the weather?</h1>
+      <div
+        class="date"
+        id="current-date">
+        Date will go here
+      </div>
+      <form>
+        <div class="row g-3 align-items-center">
+          <div class="col-auto">
+            <input
+              type="text"
+              class="form-control"
+              id="requestedCity"
+              placeholder="Enter a city.." />
+          </div>
+          <div class="col-auto">
+            <span>
               <button
-                type="info"
-                class="btn btn-info search"
-                id="search">
-                <img
-                  src="images/icons8-search-50.png"
-                  alt="Search"
-                  height="23px" />
+                type="submit"
+                class="btn btn-info"
+                id="searchButton">
+                Search
               </button>
-            </div>
-            <div class="col-1">
               <button
                 type="info"
                 class="btn btn-dark"
@@ -65,162 +53,48 @@
                   alt="Current Location"
                   height="23px" />
               </button>
-            </div>
-            <div class="col-1"></div>
+            </span>
           </div>
-        </form>
+        </div>
+      </form>
+    </div>
+    <div class="container today">
+      <div class="overview">
+        <h2 id="chosenCity">Melbourne</h2>
+        <small id="stateAndCountry">Vic, Australia</small>
+        <ul>
+          <li id="currentDayAndTime">Sunday 11:00pm</li>
+          <li id="currentDescription">Clear</li>
+        </ul>
       </div>
-
-      <br />
-      <!--Unit Selector-->
-      <div class="row">
-        <div class="col-5"></div>
-        <div class="col-1">
-          <button
-            class="btn btn-dark c"
-            id="convert-to-c">
-            °C
-          </button>
+      <div class="row today-forecast">
+        <div class="col-6 today-current-temperature">
+          <img
+            src="images/icons8-sun-40.png"
+            alt="Sunny"
+            class="currentWeatherEmoji"
+            id="currentWeatherEmoji" />
+          <span id="currentTemperature">12</span>°C | °F
         </div>
-        <div class="col-1">
-          <button
-            class="btn btn-dark f"
-            id="convert-to-f">
-            °F
-          </button>
+        <div class="col-6">
+          <ul>
+            <!--  <li id="currentRain">Precipitation: 0%</li> -->
+            <li id="currentHumidity">Humidity: 73%</li>
+            <li id="currentWind">Wind: 2 km/h</li>
+          </ul>
         </div>
-        <div class="col-5"></div>
-      </div>
-      <!--Block with city and current temp-->
-      <div class="row today-block">
-        <!--LHS of block, City name-->
-        <div class="col-3"></div>
-        <div class="col-3 location-city">
-          <div
-            class="col-12 city"
-            id="city">
-            Melbourne
-          </div>
-          <div
-            class="col-12 location-country"
-            id="country">
-            Victoria, Australia
-          </div>
-          <div
-            class="col-12 feels-like"
-            id=""
-            feels-like>
-            Feels like 16°
-          </div>
-        </div>
-        <!--RHS of block, Current temp, icon, description min and max-->
-        <div class="col-4 current-forecast">
-          <div class="row">
-            <div
-              class="col-6 current-temp-number"
-              id="current-temp">
-              17°
-            </div>
-            <div class="col-6 main-icon">
-              <img
-                src="http://openweathermap.org/img/wn/01d@2x.png"
-                alt="Weather Icon"
-                width="120px"
-                height="120px"
-                id="currentEmoji"
-                class="current-weather-emoji" />
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-3"></div>
-            <div class="col-3">
-              <div class="col-12 today-temp high">Max</div>
-              <div
-                class="col-12 today-temp high"
-                id="current-high-temp">
-                25
-              </div>
-            </div>
-            <div class="col-3">
-              <div class="col-12 today-temp low">Min</div>
-              <div
-                class="col-12 today-temp low"
-                id="current-low-temp">
-                17
-              </div>
-            </div>
-            <div class="col-3"></div>
-          </div>
-        </div>
-        <div class="col-2"></div>
       </div>
     </div>
-    <br />
-    <!--Forecast Block-->
-    <div class="row forecast-block">
-      <div class="col-3"></div>
-      <div class="col-1">
-        <div class="col-12 day">Mon</div>
-        <div class="col-12 icon">🌧</div>
-        <div class="col-12 temp">
-          <span class="high">18</span>
-          <span class="low">10</span>
-        </div>
-      </div>
-      <div class="col-1">
-        <div class="col-12 day">Tue</div>
-        <div class="col-12 icon">🌤</div>
-        <div class="col-12 temp">
-          <span class="high">h</span>
-          <span class="low">l</span>
-        </div>
-      </div>
-      <div class="col-1">
-        <div class="col-12 day">Wed</div>
-        <div class="col-12 icon">🌧</div>
-        <div class="col-12 temp">
-          <span class="high">h</span>
-          <span class="low">l</span>
-        </div>
-      </div>
-      <div class="col-1">
-        <div class="col-12 day">Thu</div>
-        <div class="col-12 icon">🌤</div>
-        <div class="col-12 temp">
-          <span class="high">h</span>
-          <span class="low">l</span>
-        </div>
-      </div>
-      <div class="col-1">
-        <div class="col-12 day">Fri</div>
-        <div class="col-12 icon">🌧</div>
-        <div class="col-12 temp">
-          <span class="high">h</span>
-          <span class="low">l</span>
-        </div>
-      </div>
-      <div class="col-1">
-        <div class="col-12 day">Sat</div>
-        <div class="col-12 icon">🌧</div>
-        <div class="col-12 temp">
-          <span class="high">h</span>
-          <span class="low">l</span>
-        </div>
-      </div>
-      <div class="col-3"></div>
-    </div>
-    <br />
-    <br />
-    <br />
+
     <div>
-      <footer>
-        Source code for this website can be found
+      <footer class="fixed-bottom">
         <a
           href="https://github.com/NicoleLee472/WeatherApp"
           class="href"
-          >here.</a
+          target="_blank"
+          >Open source code by</a
         >
+        Nicole
       </footer>
     </div>
     <script src="src/script.js"></script>

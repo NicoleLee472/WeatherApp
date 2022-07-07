@@ -1,133 +1,69 @@
-* {
-  box-sizing: border-box;
+div {
+  display: block;
 }
 
 body {
   background-color: #cce8f1;
 }
 
-.main-block {
+.header {
+  padding: 20px 20px;
   margin: 10px auto;
-  padding: 50px, 10px;
-  align-self: center;
-}
-.heading {
-  display: block;
-  margin: 20px 20px;
+  border-radius: 20px;
+  max-width: 400px;
   text-align: center;
+  background-color: #ffffff;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
 }
-
-/* search section */
-.search-block {
-  display: block;
-  max-width: 70%;
-}
-.search-input {
-  border-color: brown;
-}
-
-.search-button {
-  display: inline;
-}
-.btn.btn-info.search {
-  width: 100%;
-  min-width: fit-content;
-}
-
-.btn.btn-dark.c {
-  text-align: right;
-}
-
-/* current weather */
-.col-4.current-forecast {
-  text-align: left;
-  padding-bottom: 12px;
-}
-
-.main-icon {
-  text-align: left;
-  font-size: 70px;
-  padding: 0;
-}
-.location-city {
-  font-size: 40px;
-  text-align: left;
-}
-.city {
-  padding-top: 20px;
-}
-.location-country {
-  font-size: 20px;
-}
-.current-description {
-  font-size: 25px;
-  text-align: left;
-}
-
-.current-temp {
-  text-align: center;
-  font-size: 42px;
-}
-.current-temp-number {
-  font-size: 80px;
-  padding: 0;
-  text-align: right;
-}
-.feels-like {
-  font-size: 16px;
-  font-style: italic;
+.date {
   margin-top: 10px;
+  margin-bottom: 20px;
 }
-.today-temp {
+.btn.btn-info {
+  background-color: #8c61ff;
+  border-color: #8c61ff;
+  --bs-btn-color: var(--bs-white);
+}
+.btn.btn-dark {
+  background-color: #45c2fd;
+  border-color: #45c2fd;
+}
+.today {
+  padding: 20px 20px;
+  margin: 10px auto;
+  border-radius: 20px;
+  max-width: 500px;
+  text-align: left;
+  background-color: #ffffff;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+  line-height: 25px;
+}
+.overview {
+  margin-bottom: 20px;
+}
+
+.currentWeatherEmoji {
+  max-width: 60px;
+}
+
+li.currentDescription {
+  text-transform: capitalize;
+}
+
+.today-current-temperature {
   font-size: 25px;
-  font-weight: bold;
 }
-.low {
-  color: rgb(118, 111, 111);
-  text-align: center;
-}
-.high {
-  text-align: center;
-}
-.today-temp.high {
-  text-align: center;
-}
-.today-temp.low {
-  text-align: center;
-}
-
-/* forecast */
-.row.forecast-block {
-  text-align: center;
-}
-
-.five-day-forecast {
-  text-align: center;
-}
-.day-block {
-  font-size: 32px;
-}
-.day {
-  padding: 3px;
-}
-.icon-block {
-  font-size: 32px;
-}
-.icon {
-  padding: 3px;
-}
-.temp-block {
-  font-weight: bold;
-}
-.temp {
-  padding: 3px;
-}
-
-.col-12.date {
-  text-align: center;
-  font-size: 20px;
-}
-
 footer {
   text-align: center;
+  margin: 20px auto;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+small {
+  font-size: 18px;
 }
