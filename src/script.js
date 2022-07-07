@@ -11,9 +11,17 @@ let HelperFunctions = (function () {
     return Math.round((tempInC * 9) / 5 + 32)
   }
 
+  function preventDefaultHelper(f) {
+    return function (event) {
+      event.preventDefault()
+      f()
+    }
+  }
+
   return {
     toTitleCase: titleCase,
     convertToFahrenheit: cToF,
+    preventDefault: preventDefaultHelper,
   }
 })()
 
@@ -35,10 +43,26 @@ let Temperatures = (function () {
   return {
     setCelsiusScale: function () {
       isCelsius = true
+      ConvertTemperatures.chooseCelsius.setAttribute(
+        'class',
+        'temperatureScaleActive'
+      )
+      ConvertTemperatures.chooseFahrenheit.setAttribute(
+        'class',
+        'temperatureScaleInactive'
+      )
       displayTemperatures()
     },
     setFahrenheitScale: function () {
       isCelsius = false
+      ConvertTemperatures.chooseCelsius.setAttribute(
+        'class',
+        'temperatureScaleInactive'
+      )
+      ConvertTemperatures.chooseFahrenheit.setAttribute(
+        'class',
+        'temperatureScaleActive'
+      )
       displayTemperatures()
     },
     setDegreesCelsius: function (degreesC) {
@@ -88,67 +112,83 @@ let SearchResults = (function () {
   const apiKey = '18e21a300ebbb03dff744f074bc3f64f'
   const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?`
 
-  let mutateElements = {
-    chosenCity: document.querySelector('#chosenCity'),
-    stateAndCountry: document.querySelector('#stateAndCountry'),
-    currentWeatherEmoji: document.querySelector('#currentWeatherEmoji'),
-    currentHumidity: document.querySelector('#currentHumidity'),
-    currentWind: document.querySelector('#currentWind'),
-    currentDescription: document.querySelector('#currentDescription'),
-    currentRain: document.querySelector('#currentRain'),
-  }
+  //elements to be changed
+  chosenCity = document.querySelector('#chosenCity')
+  stateAndCountry = document.querySelector('#stateAndCountry')
+  currentWeatherEmoji = document.querySelector('#currentWeatherEmoji')
+  currentHumidity = document.querySelector('#currentHumidity')
+  currentWind = document.querySelector('#currentWind')
+  currentDescription = document.querySelector('#currentDescription')
+  currentRain = document.querySelector('#currentRain')
+  todayBlock - document.querySelector('#todayBlock')
 
-  let actionElements = {
-    requestedCity: document.querySelector('#requestedCity'),
-    searchFormSubmission: document.querySelector('form'),
-  }
+  //action elements
+  requestedCity = document.querySelector('#requestedCity')
+  searchFormSubmission = document.querySelector('form')
 
   let showCurrentData = function (response) {
     Temperatures.setDegreesCelsius(response.data.main.temp)
 
-    mutateElements.chosenCity.innerHTML = response.data.name
-    mutateElements.stateAndCountry.innerHTML = response.data.sys.country
-    mutateElements.currentWeatherEmoji.src = `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
-    mutateElements.currentWeatherEmoji.alt = HelperFunctions.toTitleCase(
+    chosenCity.innerHTML = response.data.name
+    stateAndCountry.innerHTML = response.data.sys.country
+    currentWeatherEmoji.src = `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+    currentWeatherEmoji.alt = HelperFunctions.toTitleCase(
       response.data.weather[0].description
     )
-    mutateElements.currentHumidity.innerHTML = response.data.main.humidity
-    mutateElements.currentWind.innerHTML = Math.round(response.data.wind.speed)
-    /* mutateElements.currentRain.innerHTML = response.data.rain */
-    mutateElements.currentDescription.innerHTML = HelperFunctions.toTitleCase(
+    currentHumidity.innerHTML = response.data.main.humidity
+    currentWind.innerHTML = Math.round(response.data.wind.speed)
+    currentDescription.innerHTML = HelperFunctions.toTitleCase(
       response.data.weather[0].description
     )
+    todayBlock.hidden = false
   }
 
-  let searchApiCall = function (event) {
-    event.preventDefault()
+  //Search form
+  let searchApiCall = function () {
     axios
-      .get(
-        `${weatherUrl}q=${actionElements.requestedCity.value}&appid=${apiKey}&units=metric`
-      )
+      .get(`${weatherUrl}q=${requestedCity.value}&appid=${apiKey}&units=metric`)
       .then(showCurrentData)
   }
 
-  actionElements.searchFormSubmission.addEventListener('submit', searchApiCall)
+  searchFormSubmission.addEventListener(
+    'submit',
+    HelperFunctions.preventDefault(searchApiCall)
+  )
+
+  //current location
+  let generateApiCall = function (position) {
+    var lon = position.coords.longitude
+    var lat = position.coords.latitude
+    axios
+      .get(`${weatherUrl}lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
+      .then(showCurrentData)
+  }
+
+  let getCurrentUserGps = function () {
+    navigator.geolocation.getCurrentPosition(generateApiCall)
+  }
+
+  let showCurrentLocationData = document.querySelector('#current-location')
+  showCurrentLocationData.addEventListener(
+    'click',
+    HelperFunctions.preventDefault(getCurrentUserGps)
+  )
 })()
 
 let ConvertTemperatures = (function () {
-  let chooseCelsius = document.querySelector('#temperatureScaleC')
-  let chooseFahrenheit = document.querySelector('#temperatureScaleF')
+  let clickCelsius = document.querySelector('#temperatureScaleC')
+  let clickFahrenheit = document.querySelector('#temperatureScaleF')
 
-  let setFahrenheitHandler = function (event) {
-    event.preventDefault()
-    chooseCelsius.setAttribute('class', 'temperatureScaleInactive')
-    chooseFahrenheit.setAttribute('class', 'temperatureScaleActive')
-    Temperatures.setFahrenheitScale()
+  clickFahrenheit.addEventListener(
+    'click',
+    HelperFunctions.preventDefault(Temperatures.setFahrenheitScale)
+  )
+  clickCelsius.addEventListener(
+    'click',
+    HelperFunctions.preventDefault(Temperatures.setCelsiusScale)
+  )
+  return {
+    chooseCelsius: clickCelsius,
+    chooseFahrenheit: clickFahrenheit,
   }
-  let setCelsiusHandler = function (event) {
-    event.preventDefault()
-    chooseCelsius.setAttribute('class', 'temperatureScaleActive')
-    chooseFahrenheit.setAttribute('class', 'temperatureScaleInactive')
-    Temperatures.setCelsiusScale()
-  }
-
-  chooseCelsius.addEventListener('click', setCelsiusHandler)
-  chooseFahrenheit.addEventListener('click', setFahrenheitHandler)
 })()
