@@ -131,3 +131,24 @@ let SearchResults = (function () {
 
   actionElements.searchFormSubmission.addEventListener('submit', searchApiCall)
 })()
+
+let ConvertTemperatures = (function () {
+  let chooseCelsius = document.querySelector('#temperatureScaleC')
+  let chooseFahrenheit = document.querySelector('#temperatureScaleF')
+
+  let setFahrenheitHandler = function (event) {
+    event.preventDefault()
+    chooseCelsius.setAttribute('class', 'temperatureScaleInactive')
+    chooseFahrenheit.setAttribute('class', 'temperatureScaleActive')
+    Temperatures.setFahrenheitScale()
+  }
+  let setCelsiusHandler = function (event) {
+    event.preventDefault()
+    chooseCelsius.setAttribute('class', 'temperatureScaleActive')
+    chooseFahrenheit.setAttribute('class', 'temperatureScaleInactive')
+    Temperatures.setCelsiusScale()
+  }
+
+  chooseCelsius.addEventListener('click', setCelsiusHandler)
+  chooseFahrenheit.addEventListener('click', setFahrenheitHandler)
+})()
