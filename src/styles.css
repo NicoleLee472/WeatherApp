@@ -79,6 +79,7 @@ body {
 }
 
 .temperatureScaleInactive:hover {
+  cursor: pointer;
 }
 
 footer {
