@@ -39,13 +39,15 @@ let Temperatures = (function () {
 let Dates = (function () {
   let currentDate = document.querySelector('#current-date')
   let currentDayAndTime = document.querySelector('#currentDayAndTime')
-  let now = new Date()
+  let now = function () {
+    return new Date()
+  }
+  let currentDayNumeric = now().getDay
 
   const optionsDayAndTime = {
     weekday: 'short',
-    hour: '2-digit',
+    hour: 'numeric',
     minute: '2-digit',
-    dayPeriod: 'narrow',
   }
   const optionsDate = {
     year: 'numeric',
@@ -53,15 +55,17 @@ let Dates = (function () {
     day: 'numeric',
   }
   let refreshDates = function () {
-    currentDate.innerHTML = now.toLocaleDateString('en-AU', optionsDate)
-    currentDayAndTime.innerHTML = now
+    let currentTime = now()
+    currentDate.innerHTML = currentTime.toLocaleDateString('en-AU', optionsDate)
+    currentDayAndTime.innerHTML = currentTime
       .toLocaleDateString('en-Au', optionsDayAndTime)
       .replace(',', ' ')
+    currentDayNumeric = now().getDay
   }
   refreshDates()
   return {
     displayDates: refreshDates,
-    currentDay: now.getDay(),
+    currentDay: currentDayNumeric,
   }
 })()
 
