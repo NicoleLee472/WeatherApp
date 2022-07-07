@@ -1,3 +1,16 @@
+let HelperFunctions = (function () {
+  let titleCase = function (str) {
+    return str
+      .split(' ')
+      .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ')
+  }
+
+  return {
+    toTitleCase: titleCase,
+  }
+})()
+
 let Temperatures = (function () {
   let temperature = document.querySelector('#currentTemperature')
   var celsius = 0
@@ -82,6 +95,7 @@ let SearchResults = (function () {
     currentHumidity: document.querySelector('#currentHumidity'),
     currentWind: document.querySelector('#currentWind'),
     currentDescription: document.querySelector('#currentDescription'),
+    currentRain: document.querySelector('#currentRain'),
   }
 
   let actionElements = {
@@ -95,10 +109,15 @@ let SearchResults = (function () {
     mutateElements.chosenCity.innerHTML = response.data.name
     mutateElements.stateAndCountry.innerHTML = response.data.sys.country
     mutateElements.currentWeatherEmoji.src = `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
-    mutateElements.currentHumidity.innerHTML = `Humidity: ${response.data.main.humidity}%`
-    mutateElements.currentWind.innerHTML = `Wind speed: ${response.data.wind.speed} m/s`
-    mutateElements.currentDescription.innerHTML =
+    mutateElements.currentWeatherEmoji.alt = HelperFunctions.toTitleCase(
       response.data.weather[0].description
+    )
+    mutateElements.currentHumidity.innerHTML = response.data.main.humidity
+    mutateElements.currentWind.innerHTML = Math.round(response.data.wind.speed)
+    mutateElements.currentRain.innerHTML = response.rain
+    mutateElements.currentDescription.innerHTML = HelperFunctions.toTitleCase(
+      response.data.weather[0].description
+    )
   }
 
   let searchApiCall = function (event) {
