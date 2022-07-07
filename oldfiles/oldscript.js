@@ -62,13 +62,6 @@ function getCurrentUserGps() {
   navigator.geolocation.getCurrentPosition(generateApiCall)
 }
 
-function preventDefault(f) {
-  return function (event) {
-    event.preventDefault()
-    f()
-  }
-}
-
 searchForm.addEventListener('submit', search)
 convertToC.addEventListener(
   'click',
