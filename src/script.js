@@ -114,7 +114,7 @@ let SearchResults = (function () {
 
   //elements to be changed
   chosenCity = document.querySelector('#chosenCity')
-  stateAndCountry = document.querySelector('#stateAndCountry')
+  country = document.querySelector('#country')
   currentWeatherEmoji = document.querySelector('#currentWeatherEmoji')
   currentHumidity = document.querySelector('#currentHumidity')
   currentWind = document.querySelector('#currentWind')
@@ -128,15 +128,16 @@ let SearchResults = (function () {
 
   let showCurrentData = function (response) {
     Temperatures.setDegreesCelsius(response.data.main.temp)
-
+    console.log(response.data.sys.country)
     chosenCity.innerHTML = response.data.name
-    stateAndCountry.innerHTML = response.data.sys.country
+    country.innerHTML = response.data.sys.country
     currentWeatherEmoji.src = `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
     currentWeatherEmoji.alt = HelperFunctions.toTitleCase(
       response.data.weather[0].description
     )
     currentHumidity.innerHTML = response.data.main.humidity
     currentWind.innerHTML = Math.round(response.data.wind.speed)
+    /* currentRain.innerHTML - toString(response.data.rain.1h) */
     currentDescription.innerHTML = HelperFunctions.toTitleCase(
       response.data.weather[0].description
     )
@@ -195,7 +196,6 @@ let ConvertTemperatures = (function () {
 
 let PageBackground = (function () {
   let changeBackground = function (response) {
-    console.log(response)
     document.body.style.backgroundRepeat = 'no-repeat'
     document.body.style.backgroundSize = 'cover'
     document.body.style.backgroundImage = `url('${response.data.url}')`
