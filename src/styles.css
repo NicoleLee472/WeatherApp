@@ -49,7 +49,7 @@ body {
   left: -10px;
 }
 
-li.currentDescription {
+.currentDescription::first-letter {
   text-transform: capitalize;
 }
 
