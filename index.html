@@ -65,8 +65,7 @@
     </div>
     <div
       class="container today"
-      id="todayBlock"
-      hidden>
+      id="todayBlock" hidden>
       <div class="overview">
         <h2 id="chosenCity">
           <small
@@ -113,10 +112,77 @@
       </div>
     </div>
 
-    <div>
-      <div
-        class="forecast-block"
-        id="forecastBlock"></div>
+    <div class="forecast-block" hidden>
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-light" data-bs-toggle="collapse" data-bs-target="#collapsedOne">
+          <div class="forcastDay">Sat</div>
+          <div class="forecastIcon">
+            <img src="images/partly-cloudy.png" alt="Partly Cloudy" class="forecastIconImg">
+          </div>
+            <div class="forecastTemperatures">
+              <span class="forecastMax">30°</span>
+              <span class="forecastMin">9°</span>
+            </div>
+          </button>
+        <button type="button" class="btn btn-light" data-bs-toggle="collapse" data-bs-target="#collapsedTwo">
+          <div class="forcastDay">Sun</div>
+          <div class="forecastIcon">
+          <img src="images/partly-cloudy.png" alt="Partly Cloudy" class="forecastIconImg">
+        </div>
+          <div class="forecastTemperatures">
+            <span class="forecastMax">30°</span>
+            <span class="forecastMin">9°</span>
+          </div>
+        </button>
+        <button type="button" class="btn btn-light" data-bs-toggle="collapse" data-bs-target="#collapsedThree">
+          <div class="forcastDay">Mon</div>
+          <div class="forecastIcon">
+          <img src="images/partly-cloudy.png" alt="Partly Cloudy" class="forecastIconImg">
+        </div>
+          <div class="forecastTemperatures">
+            <span class="forecastMax">30°</span>
+            <span class="forecastMin">9°</span>
+          </div>
+        </button>
+        <button type="button" class="btn btn-light" data-bs-toggle="collapse" data-bs-target="#collapsedFour">
+          <div class="forcastDay">Tue</div>
+          <div class="forecastIcon">
+          <img src="images/partly-cloudy.png" alt="Partly Cloudy" class="forecastIconImg">
+        </div>
+          <div class="forecastTemperatures">
+            <span class="forecastMax">30°</span>
+            <span class="forecastMin">9°</span>
+          </div>
+        </button>
+        <button type="button" class="btn btn-light" data-bs-toggle="collapse" data-bs-target="#collapsedFive">
+          <div class="forcastDay">Wed</div>
+          <div class="forecastIcon">
+          <img src="images/partly-cloudy.png" alt="Partly Cloudy" class="forecastIconImg">
+        </div>
+          <div class="forecastTemperatures">
+            <span class="forecastMax">30°</span>
+            <span class="forecastMin">9°</span>
+          </div>
+        </button>
+      </div>
+      <div class="forecast-block">
+      <div class="collapse" id="collapsedOne">
+        <div class="card card-body details">Day 1 Details</div>
+      </div>
+      <div class="collapse" id="collapsedTwo">
+        <div class="card card-body">Day 2 Details</div>
+      </div>
+      <div class="collapse" id="collapsedThree">
+        <div class="card card-body">Day 3 Details</div>
+      </div>
+      <div class="collapse" id="collapsedFour">
+        <div class="card card-body">Day 4 Details</div>
+      </div>
+      <div class="collapse" id="collapsedFive">
+        <div class="card card-body">Day 5 Details</div>
+      </div>
+    </div>
+      </div>
       <footer class="fixed-bottom">
         <a
           href="https://github.com/NicoleLee472/WeatherApp"

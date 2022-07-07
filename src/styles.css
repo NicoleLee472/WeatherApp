@@ -82,6 +82,28 @@ body {
   cursor: pointer;
 }
 
+.collapse,
+.details {
+  display: block;
+  max-width: 450px;
+  margin: 1px, auto;
+}
+
+.forecast-block {
+  margin: 10px auto;
+  text-align: center;
+}
+.forecastMin {
+  color: darkgrey;
+}
+.btn.btn-light {
+  max-width: 90px;
+  background-color: white;
+}
+.forecastIconImg {
+  max-width: 100%;
+}
+
 footer {
   text-align: center;
   /* margin: 20px auto; */
