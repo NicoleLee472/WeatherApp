@@ -60,8 +60,10 @@
     </div>
     <div class="container today">
       <div class="overview">
-        <h2 id="chosenCity">Melbourne</h2>
-        <small id="stateAndCountry">Vic, Australia</small>
+        <h2 id="chosenCity">
+          Melbourne <small id="stateAndCountry">AU</small>
+        </h2>
+
         <ul>
           <li id="currentDayAndTime">Sunday 11:00pm</li>
           <li id="currentDescription">Clear</li>
@@ -70,16 +72,22 @@
       <div class="row today-forecast">
         <div class="col-6 today-current-temperature">
           <img
-            src="images/icons8-sun-40.png"
+            src="images/partly-cloudy.png"
             alt="Sunny"
             class="currentWeatherEmoji"
             id="currentWeatherEmoji" />
-          <span id="currentTemperature">12</span
-          ><span id="temperatureScale">°C | °F</span>
+          <span
+            id="currentTemperature"
+            class="currentTemperatureClass"
+            >12</span
+          ><span
+            id="temperatureScale"
+            class="temperature-scale"
+            >°C | °F</span
+          >
         </div>
         <div class="col-6">
           <ul>
-            <!--  <li id="currentRain">Precipitation: 0%</li> -->
             <li id="currentHumidity">Humidity: 73%</li>
             <li id="currentWind">Wind: 2 km/h</li>
           </ul>

@@ -43,15 +43,25 @@ body {
 }
 
 .currentWeatherEmoji {
-  max-width: 60px;
+  max-width: 80px;
+  position: relative;
+  top: -12px;
+  left: -10px;
 }
 
 li.currentDescription {
   text-transform: capitalize;
 }
 
-.today-current-temperature {
-  font-size: 25px;
+.currentTemperatureClass {
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 1;
+}
+.temperature-scale {
+  position: relative;
+  font-size: 16px;
+  top: -24px;
 }
 footer {
   text-align: center;
