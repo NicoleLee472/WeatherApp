@@ -192,3 +192,18 @@ let ConvertTemperatures = (function () {
     chooseFahrenheit: clickFahrenheit,
   }
 })()
+
+let PageBackground = (function () {
+  let changeBackground = function (response) {
+    console.log(response)
+    document.body.style.backgroundRepeat = 'no-repeat'
+    document.body.style.backgroundSize = 'cover'
+    document.body.style.backgroundImage = `url('${response.data.url}')`
+  }
+
+  axios
+    .get(
+      'https://api.nasa.gov/planetary/apod?api_key=dMXgU9tfrbn6VvKiYo4jnOhZtHTiC0ZMyjGmrsqg'
+    )
+    .then(changeBackground)
+})()
