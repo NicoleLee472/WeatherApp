@@ -6,31 +6,31 @@ let HelperFunctions = (function () {
       .join(' ')
   }
 
-  return {
-    toTitleCase: titleCase,
-  }
-})()
-
-let Temperatures = (function () {
-  let temperature = document.querySelector('#currentTemperature')
-  var celsius = 0
-  var fahrenheit = 0
-  var isCelsius = true
-  let displayTemperatures = function () {
-    if (isCelsius) {
-      temperature.innerHTML = Math.round(celsius)
-    } else {
-      temperature.innerHTML = Math.round(fahrenheit)
-    }
-  }
-  //convert Fahrenheit to Celsius
-  function fToC(tempInF) {
-    return Math.round((5 / 9) * (tempInF - 32))
-  }
   //convert Celsuis to Fahrenheit
   function cToF(tempInC) {
     return Math.round((tempInC * 9) / 5 + 32)
   }
+
+  return {
+    toTitleCase: titleCase,
+    convertToFahrenheit: cToF,
+  }
+})()
+
+let Temperatures = (function () {
+  let currentTemperature = document.querySelector('#currentTemperature')
+  var celsius = 0
+  var fahrenheit = 0
+  var isCelsius = true
+
+  let displayTemperatures = function () {
+    if (isCelsius) {
+      currentTemperature.innerHTML = Math.round(celsius)
+    } else {
+      currentTemperature.innerHTML = Math.round(fahrenheit)
+    }
+  }
+
   //this is like an API
   return {
     setCelsiusScale: function () {
@@ -43,7 +43,7 @@ let Temperatures = (function () {
     },
     setDegreesCelsius: function (degreesC) {
       celsius = degreesC
-      fahrenheit = cToF(celsius)
+      fahrenheit = HelperFunctions.convertToFahrenheit(celsius)
       displayTemperatures()
     },
   }
@@ -114,7 +114,7 @@ let SearchResults = (function () {
     )
     mutateElements.currentHumidity.innerHTML = response.data.main.humidity
     mutateElements.currentWind.innerHTML = Math.round(response.data.wind.speed)
-    mutateElements.currentRain.innerHTML = response.rain
+    /* mutateElements.currentRain.innerHTML = response.data.rain */
     mutateElements.currentDescription.innerHTML = HelperFunctions.toTitleCase(
       response.data.weather[0].description
     )

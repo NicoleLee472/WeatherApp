@@ -42,11 +42,19 @@ body {
   margin-bottom: 20px;
 }
 
+.country {
+  color: darkgray;
+}
+
 .currentWeatherEmoji {
   max-width: 80px;
   position: relative;
   top: -12px;
   left: -10px;
+}
+
+.current-description {
+  line-height: 2;
 }
 
 .currentDescription::first-letter {
@@ -62,6 +70,12 @@ body {
   position: relative;
   font-size: 16px;
   top: -24px;
+}
+.temperatureScaleActive {
+  font-weight: 600;
+}
+.temperatureScaleInactive {
+  color: darkgray;
 }
 footer {
   text-align: center;
