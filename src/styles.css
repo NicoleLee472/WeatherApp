@@ -53,7 +53,13 @@ body {
   top: -12px;
   left: -10px;
 }
-
+.today-min,
+.today.max {
+  text-align: center;
+}
+.today-min {
+  color: darkgray;
+}
 .current-description {
   line-height: 2;
 }
@@ -83,8 +89,7 @@ body {
   cursor: pointer;
 }
 
-.collapse,
-.details {
+.collapse.details {
   display: block;
   max-width: 450px;
   margin: 1px, auto;

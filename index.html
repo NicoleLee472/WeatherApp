@@ -66,7 +66,7 @@
     </div>
       <div
       class="container today"
-      id="todayBlock" hidden>
+      id="todayBlock">
       <div class="overview row align-items-center">
         <div class="col-6">
         <h2 id="chosenCity">Melbs
@@ -83,8 +83,10 @@
         </ul>
       </div>
       <div class="col-6">
-        <div class="today-max">Max: <span id="todayMax">16</span>°</div>
-        <div class="today-min">Min: <span id="todayMin">9</span>°</div>
+        <div class="row">
+          <div class="col-6 today-max">Max<div><span id="todayMax"></span>°</div></div>
+          <div class="col-6 today-min">Min<div><span id="todayMin"></span>°</div></div>
+      </div>
       </div>
       </div>
       <div class="row today-forecast">
@@ -118,60 +120,60 @@
         </div>
       </div>
     </div>
-    <div class="forecast-block" id="forecastBlock" hidden>
+    <div class="forecast-block" id="forecastBlock">
       <div class="btn-group" role="group" aria-label="Basic example">
         <button type="button" class="btn btn-light" data-bs-toggle="collapse" data-bs-target="#collapsedOne">
           <!-- forecast day 1 -->
-          <div class="forcastDay" id="forecastDay1"></div>
+          <div class="forecastDay" id="forecastDay1"></div>
           <div class="forecastIcon">
             <img src="images/partly-cloudy.png" alt="Partly Cloudy" class="forecastIconImg" id="forecastEmoji1">
           </div>
             <div class="forecastTemperatures">
-              <span class="forecastMax"><span id="forecastMax1"></span>°</span>
+              <span class="forecastMax"><span id="forecastMax1"></span>° </span>
               <span class="forecastMin"><span id="forecastMin1"></span>°</span>
             </div>
           </button>
           <!-- forecast day 2 -->
         <button type="button" class="btn btn-light" data-bs-toggle="collapse" data-bs-target="#collapsedTwo">
-          <div class="forcastDay" id="forecastDay2"></div>
+          <div class="forecastDay" id="forecastDay2"></div>
           <div class="forecastIcon">
           <img src="images/partly-cloudy.png" alt="Partly Cloudy" class="forecastIconImg" id="forecastEmoji2">
         </div>
           <div class="forecastTemperatures">
-            <span class="forecastMax"><span id="forecastMax2"></span>°</span>
+            <span class="forecastMax"><span id="forecastMax2"></span>° </span>
               <span class="forecastMin"><span id="forecastMin2"></span>°</span>
           </div>
         </button>
         <!-- forecast day 3 -->
         <button type="button" class="btn btn-light" data-bs-toggle="collapse" data-bs-target="#collapsedThree">
-          <div class="forcastDay" id="forecastDay3"></div>
+          <div class="forecastDay" id="forecastDay3"></div>
           <div class="forecastIcon">
           <img src="images/partly-cloudy.png" alt="Partly Cloudy" class="forecastIconImg" id="forecastEmoji3">
         </div>
           <div class="forecastTemperatures">
-            <span class="forecastMax"><span id="forecastMax3"></span>°</span>
+            <span class="forecastMax"><span id="forecastMax3"></span>° </span>
               <span class="forecastMin"><span id="forecastMin3"></span>°</span>
           </div>
         </button>
         <!-- forecast day 4 -->
         <button type="button" class="btn btn-light" data-bs-toggle="collapse" data-bs-target="#collapsedFour">
-          <div class="forcastDay" id="forecastDay4"></div>
+          <div class="forecastDay" id="forecastDay4"></div>
           <div class="forecastIcon">
           <img src="images/partly-cloudy.png" alt="Partly Cloudy" class="forecastIconImg" id="forecastEmoji4">
         </div>
           <div class="forecastTemperatures">
-            <span class="forecastMax"><span id="forecastMax4"></span>°</span>
+            <span class="forecastMax"><span id="forecastMax4"></span>° </span>
               <span class="forecastMin"><span id="forecastMin4"></span>°</span>
           </div>
         </button>
        <!--  forecast day 5 -->
         <button type="button" class="btn btn-light" data-bs-toggle="collapse" data-bs-target="#collapsedFive">
-          <div class="forcastDay" id="forecastDay5"></div>
+          <div class="forecastDay" id="forecastDay5"></div>
           <div class="forecastIcon">
           <img src="images/partly-cloudy.png" alt="Partly Cloudy" class="forecastIconImg" id="forecastEmoji5">
         </div>
           <div class="forecastTemperatures">
-            <span class="forecastMax"><span id="forecastMax5"></span>°</span>
+            <span class="forecastMax"><span id="forecastMax5"></span>° </span>
               <span class="forecastMin"><span id="forecastMin5"></span>°</span>
           </div>
         </button>

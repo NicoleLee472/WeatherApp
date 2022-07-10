@@ -39,28 +39,46 @@ let Elements = (function () {
     description: document.querySelector('#currentDescription'),
   }
 
-  let forecastElementsArrayOfObjects = [{}, {}, {}, {}, {}]
-  let storeForecastElements = function () {
-    for (let i = 0; i < forecastElementsArrayOfObjects.length; i++) {
-      forecastElementsArrayOfObjects[i].dayName = document.querySelector(
-        `#forecastDay${i + 1}`
-      )
-      forecastElementsArrayOfObjects[i].emoji = document.querySelector(
-        `#forecastEmoji${i + 1}`
-      )
-      forecastElementsArrayOfObjects[i].maxTemp = document.querySelector(
-        `#forecastMin${i + 1}`
-      )
-      forecastElementsArrayOfObjects[i].minTemp = document.querySelector(
-        `#forecastMax${i + 1}`
-      )
-    }
+  let forecast1 = {
+    dayName: document.querySelector('#forecastDay1'),
+    emoji: document.querySelector('#forecastEmoji1'),
+    forecastMin: document.querySelector('#forecastMin1'),
+    forecastMax: document.querySelector('#forecastMax1'),
   }
-  storeForecastElements()
+  let forecast2 = {
+    dayName: document.querySelector('#forecastDay2'),
+    emoji: document.querySelector('#forecastEmoji2'),
+    forecastMin: document.querySelector('#forecastMin2'),
+    forecastMax: document.querySelector('#forecastMax2'),
+  }
+  let forecast3 = {
+    dayName: document.querySelector('#forecastDay3'),
+    emoji: document.querySelector('#forecastEmoji3'),
+    forecastMin: document.querySelector('#forecastMin3'),
+    forecastMax: document.querySelector('#forecastMax3'),
+  }
+  let forecast4 = {
+    dayName: document.querySelector('#forecastDay4'),
+    emoji: document.querySelector('#forecastEmoji4'),
+    forecastMin: document.querySelector('#forecastMin4'),
+    forecastMax: document.querySelector('#forecastMax4'),
+  }
+  let forecast5 = {
+    dayName: document.querySelector('#forecastDay5'),
+    emoji: document.querySelector('#forecastEmoji5'),
+    forecastMin: document.querySelector('#forecastMin5'),
+    forecastMax: document.querySelector('#forecastMax5'),
+  }
+
+  var forecastElementsArrayOfObjects = [{}, {}, {}, {}, {}]
 
   return {
     todayObj: todayObject,
-    forecastArrObj: forecastElementsArrayOfObjects,
+    forecastDay1: forecast1,
+    forecastDay2: forecast2,
+    forecastDay3: forecast3,
+    forecastDay4: forecast4,
+    forecastDay5: forecast5,
   }
 })()
 
@@ -75,49 +93,71 @@ let Temperatures = (function () {
       Elements.todayObj.currentTemp.innerHTML = Fetch.todaysDataObj.currentTempC
       Elements.todayObj.maxTemp.innerHTML = Fetch.todaysDataObj.maxTempC
       Elements.todayObj.minTemp.innerHTML = Fetch.todaysDataObj.minTempC
-
-      for (let i = 0; i < Elements.forecastArrObj.length; i++) {
-        Elements.forecastArrObj[i].maxTemp.innerHTML =
-          Fetch.forecastDataArrOfObj.maxTempC
-        Elements.forecastArrObj[i].minTemp.innerHTML =
-          Fetch.forecastDataArrOfObj.minTempC
-      }
     } else {
       Elements.todayObj.currentTemp.innerHTML = Fetch.todaysDataObj.currentTempF
       Elements.todayObj.maxTemp.innerHTML = Fetch.todaysDataObj.maxTempF
       Elements.todayObj.minTemp.innerHTML = Fetch.todaysDataObj.minTempF
-
-      for (let i = 0; i < Elements.forecastArrObj.length; i++) {
-        Elements.forecastArrObj[i].maxTemp.innerHTML =
-          Fetch.forecastDataArrOfObj.maxTempF
-        Elements.forecastArrObj[i].minTemp.innerHTML =
-          Fetch.forecastDataArrOfObj.minTempF
-      }
     }
   }
 
   let displayForecastTemperatures = function () {
     if (isCelsius) {
-      for (let i = 0; i < Elements.forecastArrObj.length; i++) {
-        Elements.forecastArrObj[i].maxTemp.innerHTML =
-          Fetch.forecastDataArrOfObj.maxTempC
-        Elements.forecastArrObj[i].minTemp.innerHTML =
-          Fetch.forecastDataArrOfObj.minTempC
-      }
+      Elements.forecastDay1.forecastMax.innerHTML =
+        Fetch.forecastDataArrOfObj[0].maxTempC
+      Elements.forecastDay1.forecastMin.innerHTML =
+        Fetch.forecastDataArrOfObj[0].minTempC
+
+      Elements.forecastDay2.forecastMax.innerHTML =
+        Fetch.forecastDataArrOfObj[1].maxTempC
+      Elements.forecastDay2.forecastMin.innerHTML =
+        Fetch.forecastDataArrOfObj[1].minTempC
+
+      Elements.forecastDay3.forecastMax.innerHTML =
+        Fetch.forecastDataArrOfObj[2].maxTempC
+      Elements.forecastDay3.forecastMin.innerHTML =
+        Fetch.forecastDataArrOfObj[2].minTempC
+
+      Elements.forecastDay4.forecastMax.innerHTML =
+        Fetch.forecastDataArrOfObj[3].maxTempC
+      Elements.forecastDay4.forecastMin.innerHTML =
+        Fetch.forecastDataArrOfObj[3].minTempC
+
+      Elements.forecastDay5.forecastMax.innerHTML =
+        Fetch.forecastDataArrOfObj[4].maxTempC
+      Elements.forecastDay5.forecastMin.innerHTML =
+        Fetch.forecastDataArrOfObj[4].minTempC
     } else {
-      for (let i = 0; i < Elements.forecastArrObj.length; i++) {
-        Elements.forecastArrObj[i].maxTemp.innerHTML =
-          Fetch.forecastDataArrOfObj.maxTempF
-        Elements.forecastArrObj[i].minTemp.innerHTML =
-          Fetch.forecastDataArrOfObj.minTempF
-      }
+      Elements.forecastDay1.forecastMax.innerHTML =
+        Fetch.forecastDataArrOfObj[0].maxTempF
+      Elements.forecastDay1.forecastMin.innerHTML =
+        Fetch.forecastDataArrOfObj[0].minTempF
+
+      Elements.forecastDay2.forecastMax.innerHTML =
+        Fetch.forecastDataArrOfObj[1].maxTempF
+      Elements.forecastDay2.forecastMin.innerHTML =
+        Fetch.forecastDataArrOfObj[1].minTempF
+
+      Elements.forecastDay3.forecastMax.innerHTML =
+        Fetch.forecastDataArrOfObj[2].maxTempF
+      Elements.forecastDay3.forecastMin.innerHTML =
+        Fetch.forecastDataArrOfObj[2].minTempF
+
+      Elements.forecastDay4.forecastMax.innerHTML =
+        Fetch.forecastDataArrOfObj[3].maxTempF
+      Elements.forecastDay4.forecastMin.innerHTML =
+        Fetch.forecastDataArrOfObj[3].minTempF
+
+      Elements.forecastDay5.forecastMax.innerHTML =
+        Fetch.forecastDataArrOfObj[4].maxTempF
+      Elements.forecastDay5.forecastMin.innerHTML =
+        Fetch.forecastDataArrOfObj[4].minTempF
     }
   }
 
   let setCelsiusScale = function () {
     isCelsius = true
-    ChooseTempScale.celsius.setAttribute('class', 'temperatureScaleActive')
-    ChooseTempScale.fahrenheit.setAttribute('class', 'temperatureScaleInactive')
+    clickCelsius.setAttribute('class', 'temperatureScaleActive')
+    clickFahrenheit.setAttribute('class', 'temperatureScaleInactive')
     displayTodayTemperatures()
     displayForecastTemperatures()
   }
@@ -153,6 +193,7 @@ let Dates = (function () {
     return new Date()
   }
   let currentDay = now().getDay()
+  let currentDayOfMonth = now().getDate()
 
   const optionsDate = {
     year: 'numeric',
@@ -178,6 +219,7 @@ let Dates = (function () {
   return {
     displayDates: refreshDates,
     currentDayNumeric: currentDay,
+    currentDate: currentDayOfMonth,
   }
 })()
 
@@ -190,7 +232,6 @@ let Fetch = (function () {
   let todayDataObj = {}
 
   let storeTodayWeatherData = function (response) {
-    console.log(response)
     todayDataObj.city = response.data.name
     todayDataObj.country = response.data.sys.country
     todayDataObj.emoji = `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
@@ -216,14 +257,11 @@ let Fetch = (function () {
       HelperFunctions.convertToFahrenheit(response.data.main.feels_like)
     )
     Display.todayData()
-    console.log(todayDataObj)
   }
-
+  var apiResponse = {}
   //store forecast data from either search method
   let forecastWeatherDataArrayOfObjects = [{}, {}, {}, {}, {}]
-
   let storeForecastWeatherData = function (response) {
-    console.log(response)
     for (let i = 0; i < forecastWeatherDataArrayOfObjects.length; i++) {
       forecastWeatherDataArrayOfObjects[
         i
@@ -237,20 +275,11 @@ let Fetch = (function () {
         HelperFunctions.toTitleCase(
           response.data.list[i].weather[0].description
         )
-      forecastWeatherDataArrayOfObjects[i].currentTempC = Math.round(
-        response.data.list[i].main.temp
-      )
       forecastWeatherDataArrayOfObjects[i].maxTempC = Math.round(
         response.data.list[i].main.temp_max
       )
       forecastWeatherDataArrayOfObjects[i].minTempC = Math.round(
         response.data.list[i].main.temp_min
-      )
-      forecastWeatherDataArrayOfObjects[i].feelsLikeC = Math.round(
-        response.data.list[i].main.feels_like
-      )
-      forecastWeatherDataArrayOfObjects[i].currentTempF = Math.round(
-        HelperFunctions.convertToFahrenheit(response.data.list[i].main.temp)
       )
       forecastWeatherDataArrayOfObjects[i].maxTempF = Math.round(
         HelperFunctions.convertToFahrenheit(response.data.list[i].main.temp_max)
@@ -258,14 +287,9 @@ let Fetch = (function () {
       forecastWeatherDataArrayOfObjects[i].minTempF = Math.round(
         HelperFunctions.convertToFahrenheit(response.data.list[i].main.temp_min)
       )
-      forecastWeatherDataArrayOfObjects[i].feelsLikeF = Math.round(
-        HelperFunctions.convertToFahrenheit(
-          response.data.list[i].main.feels_like
-        )
-      )
       Display.forecastData()
     }
-    console.log(forecastWeatherDataArrayOfObjects)
+    FindMaxMinWeatherForecast.maxMin(response)
   }
 
   //weather data for searched city
@@ -308,6 +332,7 @@ let Fetch = (function () {
     searchApiCall: searchWeatherApiCall,
     todaysDataObj: todayDataObj,
     forecastDataArrOfObj: forecastWeatherDataArrayOfObjects,
+    apiResponseData: apiResponse,
   }
 })()
 
@@ -325,38 +350,6 @@ let Search = (function () {
     HelperFunctions.preventDefault(Fetch.userGps)
   )
 })()
-
-let ChooseTempScale = (function () {
-  let clickCelsius = document.querySelector('#temperatureScaleC')
-  let clickFahrenheit = document.querySelector('#temperatureScaleF')
-
-  clickFahrenheit.addEventListener(
-    'click',
-    HelperFunctions.preventDefault(Temperatures.setFahrenheitScale)
-  )
-  clickCelsius.addEventListener(
-    'click',
-    HelperFunctions.preventDefault(Temperatures.setCelsiusScale)
-  )
-  return {
-    celsius: clickCelsius,
-    fahrenheit: clickFahrenheit,
-  }
-})()
-
-/* let PageBackground = (function () {
-  let changeBackground = function (response) {
-    document.body.style.backgroundRepeat = 'no-repeat'
-    document.body.style.backgroundSize = 'cover'
-    document.body.style.backgroundImage = `url('${response.data.url}')`
-  }
-
-  axios
-    .get(
-      'https://api.nasa.gov/planetary/apod?api_key=dMXgU9tfrbn6VvKiYo4jnOhZtHTiC0ZMyjGmrsqg'
-    )
-    .then(changeBackground)
-})() */
 
 let Display = (function () {
   //elements to be changed
@@ -383,16 +376,121 @@ let Display = (function () {
 
   let showForecastData = function () {
     Temperatures.displayForecastTemps()
-    for (let i = 0; i < Elements.forecastArrObj.length; i++) {
-      Elements.forecastArrObj[i].dayName =
-        HelperFunctions.day[Dates.currentDayNumeric + i + 3]
-      Elements.forecastArrObj[i].emoji = Fetch.forecastDataArrOfObj[i].emoji
-    }
+
+    Elements.forecastDay1.dayName.innerHTML =
+      HelperFunctions.day[Dates.currentDayNumeric + 1]
+    Elements.forecastDay1.emoji.src = Fetch.forecastDataArrOfObj[0].emoji
+
+    Elements.forecastDay2.dayName.innerHTML =
+      HelperFunctions.day[Dates.currentDayNumeric + 2]
+    Elements.forecastDay2.emoji.src = Fetch.forecastDataArrOfObj[1].emoji
+
+    Elements.forecastDay3.dayName.innerHTML =
+      HelperFunctions.day[Dates.currentDayNumeric + 3]
+    Elements.forecastDay3.emoji.src = Fetch.forecastDataArrOfObj[2].emoji
+
+    Elements.forecastDay4.dayName.innerHTML =
+      HelperFunctions.day[Dates.currentDayNumeric + 4]
+    Elements.forecastDay4.emoji.src = Fetch.forecastDataArrOfObj[3].emoji
+
+    Elements.forecastDay5.dayName.innerHTML =
+      HelperFunctions.day[Dates.currentDayNumeric + 5]
+    Elements.forecastDay5.emoji.src = Fetch.forecastDataArrOfObj[4].emoji
+
     forecastBlock.hidden = false
     Dates.displayDates()
   }
   return {
     todayData: showTodayData,
     forecastData: showForecastData,
+  }
+})()
+
+/* let ChooseTempScale = (function () {
+  let clickCelsius = document.querySelector('#temperatureScaleC')
+  let clickFahrenheit = document.querySelector('#temperatureScaleF')
+
+  clickFahrenheit.addEventListener(
+    'click',
+    HelperFunctions.preventDefault(Temperatures.setFahrenheitScale)
+  )
+  clickCelsius.addEventListener(
+    'click',
+    HelperFunctions.preventDefault(Temperatures.setCelsiusScale)
+  )
+  return {
+    celsius: clickCelsius,
+    fahrenheit: clickFahrenheit,
+  }
+})() */
+
+/* let PageBackground = (function () {
+  let changeBackground = function (response) {
+    document.body.style.backgroundRepeat = 'no-repeat'
+    document.body.style.backgroundSize = 'cover'
+    document.body.style.backgroundImage = `url('${response.data.url}')`
+  }
+
+  axios
+    .get(
+      'https://api.nasa.gov/planetary/apod?api_key=dMXgU9tfrbn6VvKiYo4jnOhZtHTiC0ZMyjGmrsqg'
+    )
+    .then(changeBackground)
+})() */
+
+let FindMaxMinWeatherForecast = (function (response) {
+  let datesArrOfObj = []
+  let forecastMaxMinData = []
+
+  let storeMaxMinForecasts = function (minArray, maxArray) {
+    for (let i = 0; i < minArray.length; i++) {
+      forecastMaxMinData.push({
+        minTemp: Math.min(...minArray[i].tempMin),
+      })
+    }
+    for (let j = 0; j < maxArray.length; j++) {
+      forecastMaxMinData.push({
+        maxTemp: Math.max(...maxArray[i].tempMax),
+      })
+    }
+  }
+
+  let previousDate = Dates.currentDate
+  let findMaxMin = function (response) {
+    for (let i = 0; i < response.data.cnt; i++) {
+      let dateToTest = new Date(response.data.list[i].dt * 1000).getDate()
+      if (
+        dateToTest != previousDate &&
+        response.data.list[i].max_temp != undefined &&
+        response.data.list[i].min_temp != undefined
+      ) {
+        datesArrOfObj.push({
+          date: dateToTest,
+          tempMax: [response.data.list[i].main.temp_max],
+          tempMin: [response.data.list[i].main.temp.min],
+        })
+        previousDate = dateToTest
+      } else if (
+        response.data.list[i].max_temp != undefined &&
+        response.data.list[i].min_temp != undefined
+      ) {
+        datesArrOfObj[datesArrOfObj.length - 1].tempMax.push(
+          response.data.list[i].main.temp_max
+        )
+        datesArrOfObj[datesArrOfObj.length - 1].tempMin.push(
+          response.data.list[i].main.temp_min
+        )
+      }
+    }
+    for (let j = 0; j < datesArrOfObj.length; j++) {
+      storeMaxMinForecasts(datesArrOfObj[j].tempMin, datesArrOfObj[j].tempMax)
+    }
+    console.log(datesArrOfObj)
+    console.log(forecastMaxMinData)
+  }
+
+  return {
+    maxMin: findMaxMin,
+    maxMinArray: forecastMaxMinData,
   }
 })()
