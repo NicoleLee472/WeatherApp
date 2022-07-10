@@ -8,7 +8,7 @@ let HelperFunctions = (function () {
 
   //convert Celsuis to Fahrenheit
   function cToF(tempInC) {
-    return Math.round((tempInC * 9) / 5 + 32)
+    return (tempInC * 9) / 5 + 32
   }
 
   function preventDefaultHelper(f) {
@@ -18,58 +18,131 @@ let HelperFunctions = (function () {
     }
   }
 
+  let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+
   return {
     toTitleCase: titleCase,
     convertToFahrenheit: cToF,
     preventDefault: preventDefaultHelper,
+    day: days,
+  }
+})()
+
+let Elements = (function () {
+  let todayObject = {
+    currentTemp: document.querySelector('#currentTemperature'),
+    maxTemp: document.querySelector('#todayMax'),
+    minTemp: document.querySelector('#todayMin'),
+    emoji: document.querySelector('#currentWeatherEmoji'),
+    humidity: document.querySelector('#currentHumidity'),
+    wind: document.querySelector('#currentWind'),
+    description: document.querySelector('#currentDescription'),
+  }
+
+  let forecastElementsArrayOfObjects = [{}, {}, {}, {}, {}]
+  let storeForecastElements = function () {
+    for (let i = 0; i < forecastElementsArrayOfObjects.length; i++) {
+      forecastElementsArrayOfObjects[i].dayName = document.querySelector(
+        `#forecastDay${i + 1}`
+      )
+      forecastElementsArrayOfObjects[i].emoji = document.querySelector(
+        `#forecastEmoji${i + 1}`
+      )
+      forecastElementsArrayOfObjects[i].maxTemp = document.querySelector(
+        `#forecastMin${i + 1}`
+      )
+      forecastElementsArrayOfObjects[i].minTemp = document.querySelector(
+        `#forecastMax${i + 1}`
+      )
+    }
+  }
+  storeForecastElements()
+
+  return {
+    todayObj: todayObject,
+    forecastArrObj: forecastElementsArrayOfObjects,
   }
 })()
 
 let Temperatures = (function () {
-  let currentTemperature = document.querySelector('#currentTemperature')
-  var celsius = 0
-  var fahrenheit = 0
   var isCelsius = true
 
-  let displayTemperatures = function () {
+  let clickCelsius = document.querySelector('#temperatureScaleC')
+  let clickFahrenheit = document.querySelector('#temperatureScaleF')
+
+  let displayTodayTemperatures = function () {
     if (isCelsius) {
-      currentTemperature.innerHTML = Math.round(celsius)
+      Elements.todayObj.currentTemp.innerHTML = Fetch.todaysDataObj.currentTempC
+      Elements.todayObj.maxTemp.innerHTML = Fetch.todaysDataObj.maxTempC
+      Elements.todayObj.minTemp.innerHTML = Fetch.todaysDataObj.minTempC
+
+      for (let i = 0; i < Elements.forecastArrObj.length; i++) {
+        Elements.forecastArrObj[i].maxTemp.innerHTML =
+          Fetch.forecastDataArrOfObj.maxTempC
+        Elements.forecastArrObj[i].minTemp.innerHTML =
+          Fetch.forecastDataArrOfObj.minTempC
+      }
     } else {
-      currentTemperature.innerHTML = Math.round(fahrenheit)
+      Elements.todayObj.currentTemp.innerHTML = Fetch.todaysDataObj.currentTempF
+      Elements.todayObj.maxTemp.innerHTML = Fetch.todaysDataObj.maxTempF
+      Elements.todayObj.minTemp.innerHTML = Fetch.todaysDataObj.minTempF
+
+      for (let i = 0; i < Elements.forecastArrObj.length; i++) {
+        Elements.forecastArrObj[i].maxTemp.innerHTML =
+          Fetch.forecastDataArrOfObj.maxTempF
+        Elements.forecastArrObj[i].minTemp.innerHTML =
+          Fetch.forecastDataArrOfObj.minTempF
+      }
     }
   }
 
+  let displayForecastTemperatures = function () {
+    if (isCelsius) {
+      for (let i = 0; i < Elements.forecastArrObj.length; i++) {
+        Elements.forecastArrObj[i].maxTemp.innerHTML =
+          Fetch.forecastDataArrOfObj.maxTempC
+        Elements.forecastArrObj[i].minTemp.innerHTML =
+          Fetch.forecastDataArrOfObj.minTempC
+      }
+    } else {
+      for (let i = 0; i < Elements.forecastArrObj.length; i++) {
+        Elements.forecastArrObj[i].maxTemp.innerHTML =
+          Fetch.forecastDataArrOfObj.maxTempF
+        Elements.forecastArrObj[i].minTemp.innerHTML =
+          Fetch.forecastDataArrOfObj.minTempF
+      }
+    }
+  }
+
+  let setCelsiusScale = function () {
+    isCelsius = true
+    ChooseTempScale.celsius.setAttribute('class', 'temperatureScaleActive')
+    ChooseTempScale.fahrenheit.setAttribute('class', 'temperatureScaleInactive')
+    displayTodayTemperatures()
+    displayForecastTemperatures()
+  }
+
+  let setFahrenheitScale = function () {
+    isCelsius = false
+    clickCelsius.setAttribute('class', 'temperatureScaleInactive')
+    clickFahrenheit.setAttribute('class', 'temperatureScaleActive')
+    displayTodayTemperatures()
+    displayForecastTemperatures()
+  }
+
+  clickFahrenheit.addEventListener(
+    'click',
+    HelperFunctions.preventDefault(setFahrenheitScale)
+  )
+  clickCelsius.addEventListener(
+    'click',
+    HelperFunctions.preventDefault(setCelsiusScale)
+  )
+
   //this is like an API
   return {
-    setCelsiusScale: function () {
-      isCelsius = true
-      ConvertTemperatures.chooseCelsius.setAttribute(
-        'class',
-        'temperatureScaleActive'
-      )
-      ConvertTemperatures.chooseFahrenheit.setAttribute(
-        'class',
-        'temperatureScaleInactive'
-      )
-      displayTemperatures()
-    },
-    setFahrenheitScale: function () {
-      isCelsius = false
-      ConvertTemperatures.chooseCelsius.setAttribute(
-        'class',
-        'temperatureScaleInactive'
-      )
-      ConvertTemperatures.chooseFahrenheit.setAttribute(
-        'class',
-        'temperatureScaleActive'
-      )
-      displayTemperatures()
-    },
-    setDegreesCelsius: function (degreesC) {
-      celsius = degreesC
-      fahrenheit = HelperFunctions.convertToFahrenheit(celsius)
-      displayTemperatures()
-    },
+    displayTodayTemps: displayTodayTemperatures,
+    displayForecastTemps: displayForecastTemperatures,
   }
 })()
 
@@ -108,75 +181,152 @@ let Dates = (function () {
   }
 })()
 
-let SearchResults = (function () {
+let Fetch = (function () {
   const apiKey = '18e21a300ebbb03dff744f074bc3f64f'
-  const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?`
+  const todayWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?`
+  const forecastWeatherUrl = 'https://api.openweathermap.org/data/2.5/forecast?'
 
-  //elements to be changed
-  chosenCity = document.querySelector('#chosenCity')
-  country = document.querySelector('#country')
-  currentWeatherEmoji = document.querySelector('#currentWeatherEmoji')
-  currentHumidity = document.querySelector('#currentHumidity')
-  currentWind = document.querySelector('#currentWind')
-  currentDescription = document.querySelector('#currentDescription')
-  currentRain = document.querySelector('#currentRain')
-  todayBlock - document.querySelector('#todayBlock')
+  //store todays weather from either search method
+  let todayDataObj = {}
 
-  //action elements
-  requestedCity = document.querySelector('#requestedCity')
-  searchFormSubmission = document.querySelector('form')
-
-  let showCurrentData = function (response) {
-    Temperatures.setDegreesCelsius(response.data.main.temp)
-    console.log(response.data.sys.country)
-    chosenCity.innerHTML = response.data.name
-    country.innerHTML = response.data.sys.country
-    currentWeatherEmoji.src = `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
-    currentWeatherEmoji.alt = HelperFunctions.toTitleCase(
+  let storeTodayWeatherData = function (response) {
+    console.log(response)
+    todayDataObj.city = response.data.name
+    todayDataObj.country = response.data.sys.country
+    todayDataObj.emoji = `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+    todayDataObj.humidity = response.data.main.humidity
+    todayDataObj.wind = Math.round(response.data.wind.speed)
+    todayDataObj.description = HelperFunctions.toTitleCase(
       response.data.weather[0].description
     )
-    currentHumidity.innerHTML = response.data.main.humidity
-    currentWind.innerHTML = Math.round(response.data.wind.speed)
-    /* currentRain.innerHTML - toString(response.data.rain.1h) */
-    currentDescription.innerHTML = HelperFunctions.toTitleCase(
-      response.data.weather[0].description
+    todayDataObj.currentTempC = Math.round(response.data.main.temp)
+    todayDataObj.maxTempC = Math.round(response.data.main.temp_max)
+    todayDataObj.minTempC = Math.round(response.data.main.temp_min)
+    todayDataObj.feelsLikeC = Math.round(response.data.main.feels_like)
+    todayDataObj.currentTempF = Math.round(
+      HelperFunctions.convertToFahrenheit(response.data.main.temp)
     )
-    todayBlock.hidden = false
+    todayDataObj.maxTempF = Math.round(
+      HelperFunctions.convertToFahrenheit(response.data.main.temp_max)
+    )
+    todayDataObj.minTempF = Math.round(
+      HelperFunctions.convertToFahrenheit(response.data.main.temp_min)
+    )
+    todayDataObj.feelsLikeTempF = Math.round(
+      HelperFunctions.convertToFahrenheit(response.data.main.feels_like)
+    )
+    Display.todayData()
+    console.log(todayDataObj)
   }
 
-  //Search form
-  let searchApiCall = function () {
+  //store forecast data from either search method
+  let forecastWeatherDataArrayOfObjects = [{}, {}, {}, {}, {}]
+
+  let storeForecastWeatherData = function (response) {
+    console.log(response)
+    for (let i = 0; i < forecastWeatherDataArrayOfObjects.length; i++) {
+      forecastWeatherDataArrayOfObjects[
+        i
+      ].emoji = `http://openweathermap.org/img/wn/${response.data.list[i].weather[0].icon}@2x.png`
+      forecastWeatherDataArrayOfObjects[i].humidity =
+        response.data.list[i].main.humidity
+      forecastWeatherDataArrayOfObjects[i].wind = Math.round(
+        response.data.list[i].wind.speed
+      )
+      forecastWeatherDataArrayOfObjects[i].description =
+        HelperFunctions.toTitleCase(
+          response.data.list[i].weather[0].description
+        )
+      forecastWeatherDataArrayOfObjects[i].currentTempC = Math.round(
+        response.data.list[i].main.temp
+      )
+      forecastWeatherDataArrayOfObjects[i].maxTempC = Math.round(
+        response.data.list[i].main.temp_max
+      )
+      forecastWeatherDataArrayOfObjects[i].minTempC = Math.round(
+        response.data.list[i].main.temp_min
+      )
+      forecastWeatherDataArrayOfObjects[i].feelsLikeC = Math.round(
+        response.data.list[i].main.feels_like
+      )
+      forecastWeatherDataArrayOfObjects[i].currentTempF = Math.round(
+        HelperFunctions.convertToFahrenheit(response.data.list[i].main.temp)
+      )
+      forecastWeatherDataArrayOfObjects[i].maxTempF = Math.round(
+        HelperFunctions.convertToFahrenheit(response.data.list[i].main.temp_max)
+      )
+      forecastWeatherDataArrayOfObjects[i].minTempF = Math.round(
+        HelperFunctions.convertToFahrenheit(response.data.list[i].main.temp_min)
+      )
+      forecastWeatherDataArrayOfObjects[i].feelsLikeF = Math.round(
+        HelperFunctions.convertToFahrenheit(
+          response.data.list[i].main.feels_like
+        )
+      )
+      Display.forecastData()
+    }
+    console.log(forecastWeatherDataArrayOfObjects)
+  }
+
+  //weather data for searched city
+  let requestedCity = document.querySelector('#requestedCity')
+  let searchWeatherApiCall = function () {
     axios
-      .get(`${weatherUrl}q=${requestedCity.value}&appid=${apiKey}&units=metric`)
-      .then(showCurrentData)
+      .get(
+        `${todayWeatherUrl}q=${requestedCity.value}&appid=${apiKey}&units=metric`
+      )
+      .then(storeTodayWeatherData)
+    axios
+      .get(
+        `${forecastWeatherUrl}q=${requestedCity.value}&appid=${apiKey}&units=metric`
+      )
+      .then(storeForecastWeatherData)
   }
+  //current location using browser lat and lon
 
-  searchFormSubmission.addEventListener(
-    'submit',
-    HelperFunctions.preventDefault(searchApiCall)
-  )
-
-  //current location
-  let generateApiCall = function (position) {
+  let currentLocationApiCalls = function (position) {
     var lon = position.coords.longitude
     var lat = position.coords.latitude
     axios
-      .get(`${weatherUrl}lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
-      .then(showCurrentData)
+      .get(
+        `${todayWeatherUrl}lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
+      )
+      .then(storeTodayWeatherData)
+    axios
+      .get(
+        `${forecastWeatherUrl}lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
+      )
+      .then(storeForecastWeatherData)
   }
 
   let getCurrentUserGps = function () {
-    navigator.geolocation.getCurrentPosition(generateApiCall)
+    navigator.geolocation.getCurrentPosition(currentLocationApiCalls)
   }
+  //return functions and objects for use in other crocks
+  return {
+    userGps: getCurrentUserGps,
+    searchApiCall: searchWeatherApiCall,
+    todaysDataObj: todayDataObj,
+    forecastDataArrOfObj: forecastWeatherDataArrayOfObjects,
+  }
+})()
 
+let Search = (function () {
+  //event listener for search results weather search
+  searchFormSubmission = document.querySelector('form')
+  searchFormSubmission.addEventListener(
+    'submit',
+    HelperFunctions.preventDefault(Fetch.searchApiCall)
+  )
+  //event listener for current gps location weather search
   let showCurrentLocationData = document.querySelector('#current-location')
   showCurrentLocationData.addEventListener(
     'click',
-    HelperFunctions.preventDefault(getCurrentUserGps)
+    HelperFunctions.preventDefault(Fetch.userGps)
   )
 })()
 
-let ConvertTemperatures = (function () {
+let ChooseTempScale = (function () {
   let clickCelsius = document.querySelector('#temperatureScaleC')
   let clickFahrenheit = document.querySelector('#temperatureScaleF')
 
@@ -189,12 +339,12 @@ let ConvertTemperatures = (function () {
     HelperFunctions.preventDefault(Temperatures.setCelsiusScale)
   )
   return {
-    chooseCelsius: clickCelsius,
-    chooseFahrenheit: clickFahrenheit,
+    celsius: clickCelsius,
+    fahrenheit: clickFahrenheit,
   }
 })()
 
-let PageBackground = (function () {
+/* let PageBackground = (function () {
   let changeBackground = function (response) {
     document.body.style.backgroundRepeat = 'no-repeat'
     document.body.style.backgroundSize = 'cover'
@@ -206,4 +356,43 @@ let PageBackground = (function () {
       'https://api.nasa.gov/planetary/apod?api_key=dMXgU9tfrbn6VvKiYo4jnOhZtHTiC0ZMyjGmrsqg'
     )
     .then(changeBackground)
+})() */
+
+let Display = (function () {
+  //elements to be changed
+  let chosenCity = document.querySelector('#chosenCity')
+  let country = document.querySelector('#country')
+
+  //this element shows or hides the weather data blocks
+  let todayBlock = document.querySelector('#todayBlock')
+  let forecastBlock = document.querySelector('#forecastBlock')
+
+  //function to display weather data
+  let showTodayData = function () {
+    Temperatures.displayTodayTemps()
+    chosenCity.innerHTML = Fetch.todaysDataObj.city
+    country.innerHTML = Fetch.todaysDataObj.country
+    Elements.todayObj.emoji.src = Fetch.todaysDataObj.emoji
+    Elements.todayObj.emoji.alt = Fetch.todaysDataObj.description
+    Elements.todayObj.humidity.innerHTML = Fetch.todaysDataObj.humidity
+    Elements.todayObj.wind.innerHTML = Fetch.todaysDataObj.wind
+    Elements.todayObj.description.innerHTML = Fetch.todaysDataObj.description
+    todayBlock.hidden = false
+    Dates.displayDates()
+  }
+
+  let showForecastData = function () {
+    Temperatures.displayForecastTemps()
+    for (let i = 0; i < Elements.forecastArrObj.length; i++) {
+      Elements.forecastArrObj[i].dayName =
+        HelperFunctions.day[Dates.currentDayNumeric + i + 3]
+      Elements.forecastArrObj[i].emoji = Fetch.forecastDataArrOfObj[i].emoji
+    }
+    forecastBlock.hidden = false
+    Dates.displayDates()
+  }
+  return {
+    todayData: showTodayData,
+    forecastData: showForecastData,
+  }
 })()
