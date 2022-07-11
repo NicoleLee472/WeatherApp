@@ -10,7 +10,7 @@ body {
   padding: 20px 20px;
   margin: 10px auto;
   border-radius: 20px;
-  max-width: 450px;
+  max-width: 500px;
   text-align: center;
   background-color: #ffffff;
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
@@ -29,20 +29,21 @@ body {
   border-color: #45c2fd;
 }
 .today {
-  padding: 20px 20px;
-  margin: 10px auto;
-  border-radius: 20px;
+  padding: 10px 10px;
+  margin: 0px auto;
+  margin-top: 25px;
+  /* border-radius: 20px; */
   max-width: 450px;
   text-align: left;
   background-color: #ffffff;
-  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2); */
   line-height: 25px;
 }
 .overview {
   margin-bottom: 20px;
 }
 
-.country {
+.countryDisplay {
   color: darkgray;
 }
 
@@ -52,7 +53,13 @@ body {
   top: -12px;
   left: -10px;
 }
-
+.today-min,
+.today.max {
+  text-align: center;
+}
+.today-min {
+  color: darkgray;
+}
 .current-description {
   line-height: 2;
 }
@@ -82,9 +89,33 @@ body {
   cursor: pointer;
 }
 
+.collapse.details {
+  display: block;
+  max-width: 450px;
+  margin: 1px, auto;
+}
+
+.forecast-block {
+  margin: 10px auto;
+  text-align: center;
+}
+.forecastMin {
+  color: darkgrey;
+}
+.btn.btn-light {
+  max-width: 90px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+}
+.forecastIconImg {
+  max-width: 100%;
+}
+
 footer {
   text-align: center;
-  margin: 20px auto;
+  /* margin: 20px auto; */
+  background-color: white;
 }
 
 ul {
