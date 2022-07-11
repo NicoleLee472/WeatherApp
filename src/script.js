@@ -258,43 +258,64 @@ let Fetch = (function () {
     )
     Display.todayData()
   }
-  var apiResponse = {}
-  //store forecast data from either search method
-  let forecastWeatherDataArrayOfObjects = [{}, {}, {}, {}, {}]
-  let storeForecastWeatherData = function (response) {
-    for (let i = 0; i < forecastWeatherDataArrayOfObjects.length; i++) {
-      forecastWeatherDataArrayOfObjects[
-        i
-      ].emoji = `http://openweathermap.org/img/wn/${response.data.list[i].weather[0].icon}@2x.png`
-      forecastWeatherDataArrayOfObjects[i].humidity =
-        response.data.list[i].main.humidity
-      forecastWeatherDataArrayOfObjects[i].wind = Math.round(
-        response.data.list[i].wind.speed
-      )
-      forecastWeatherDataArrayOfObjects[i].description =
-        HelperFunctions.toTitleCase(
-          response.data.list[i].weather[0].description
-        )
-      forecastWeatherDataArrayOfObjects[i].maxTempC = Math.round(
-        response.data.list[i].main.temp_max
-      )
-      forecastWeatherDataArrayOfObjects[i].minTempC = Math.round(
-        response.data.list[i].main.temp_min
-      )
-      forecastWeatherDataArrayOfObjects[i].maxTempF = Math.round(
-        HelperFunctions.convertToFahrenheit(response.data.list[i].main.temp_max)
-      )
-      forecastWeatherDataArrayOfObjects[i].minTempF = Math.round(
-        HelperFunctions.convertToFahrenheit(response.data.list[i].main.temp_min)
-      )
-      Display.forecastData()
+
+  var forecastArrOfObjects = []
+  let todayDate = Dates.currentDate
+
+  let storeForecastData = function (response) {
+    console.log(response)
+    var previousDate = 0
+    for (let i = 0; i < response.data.cnt; i++) {
+      let dateToTest = new Date(response.data.list[i].dt * 1000).getDate()
+      if (dateToTest != todayDate) {
+        if (dateToTest != previousDate) {
+          forecastArrOfObjects.push({
+            maxTemps: [response.data.list[i].main.temp_max],
+            minTemps: [response.data.list[i].main.temp_min],
+            emojis: [response.data.list[i].weather[0].icon],
+          })
+          previousDate = dateToTest
+        } else {
+          forecastArrOfObjects[forecastArrOfObjects.length - 1].maxTemps.push(
+            response.data.list[i].main.temp_max
+          )
+          forecastArrOfObjects[forecastArrOfObjects.length - 1].minTemps.push(
+            response.data.list[i].main.temp_min
+          )
+          forecastArrOfObjects[forecastArrOfObjects.length - 1].emojis.push(
+            response.data.list[i].weather[0].icon
+          )
+        }
+      }
     }
-    FindMaxMinWeatherForecast.maxMin(response)
+    storeMaxMinData()
+  }
+
+  let forecastDisplayData = []
+  let storeMaxMinData = function () {
+    for (let i = 0; i < forecastArrOfObjects.length; i++) {
+      forecastDisplayData.push({
+        maxTempC: Math.round(Math.max(...forecastArrOfObjects[i].maxTemps)),
+        minTempC: Math.round(Math.min(...forecastArrOfObjects[i].minTemps)),
+        emoji: `http://openweathermap.org/img/wn/${
+          forecastArrOfObjects[i].emojis[
+            Math.round(forecastArrOfObjects[i].emojis.length / 2)
+          ]
+        }@2x.png`,
+      })
+      forecastDisplayData[i].maxTempF = HelperFunctions.convertToFahrenheit(
+        forecastDisplayData[i].maxTempC
+      )
+      forecastDisplayData[i].minTempF = HelperFunctions.convertToFahrenheit(
+        forecastDisplayData[i].minTempC
+      )
+    }
+    Display.forecastData()
   }
 
   //weather data for searched city
   let requestedCity = document.querySelector('#requestedCity')
-  let searchWeatherApiCall = function () {
+  let searchWeatherApiCalls = function () {
     axios
       .get(
         `${todayWeatherUrl}q=${requestedCity.value}&appid=${apiKey}&units=metric`
@@ -304,7 +325,7 @@ let Fetch = (function () {
       .get(
         `${forecastWeatherUrl}q=${requestedCity.value}&appid=${apiKey}&units=metric`
       )
-      .then(storeForecastWeatherData)
+      .then(storeForecastData)
   }
   //current location using browser lat and lon
 
@@ -320,7 +341,7 @@ let Fetch = (function () {
       .get(
         `${forecastWeatherUrl}lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
       )
-      .then(storeForecastWeatherData)
+      .then(storeForecastData)
   }
 
   let getCurrentUserGps = function () {
@@ -329,10 +350,9 @@ let Fetch = (function () {
   //return functions and objects for use in other crocks
   return {
     userGps: getCurrentUserGps,
-    searchApiCall: searchWeatherApiCall,
+    searchApiCall: searchWeatherApiCalls,
     todaysDataObj: todayDataObj,
-    forecastDataArrOfObj: forecastWeatherDataArrayOfObjects,
-    apiResponseData: apiResponse,
+    forecastDataArrOfObj: forecastDisplayData,
   }
 })()
 
@@ -437,60 +457,3 @@ let Display = (function () {
     )
     .then(changeBackground)
 })() */
-
-let FindMaxMinWeatherForecast = (function (response) {
-  let datesArrOfObj = []
-  let forecastMaxMinData = []
-
-  let storeMaxMinForecasts = function (minArray, maxArray) {
-    for (let i = 0; i < minArray.length; i++) {
-      forecastMaxMinData.push({
-        minTemp: Math.min(...minArray[i].tempMin),
-      })
-    }
-    for (let j = 0; j < maxArray.length; j++) {
-      forecastMaxMinData.push({
-        maxTemp: Math.max(...maxArray[i].tempMax),
-      })
-    }
-  }
-
-  let previousDate = Dates.currentDate
-  let findMaxMin = function (response) {
-    for (let i = 0; i < response.data.cnt; i++) {
-      let dateToTest = new Date(response.data.list[i].dt * 1000).getDate()
-      if (
-        dateToTest != previousDate &&
-        response.data.list[i].max_temp != undefined &&
-        response.data.list[i].min_temp != undefined
-      ) {
-        datesArrOfObj.push({
-          date: dateToTest,
-          tempMax: [response.data.list[i].main.temp_max],
-          tempMin: [response.data.list[i].main.temp.min],
-        })
-        previousDate = dateToTest
-      } else if (
-        response.data.list[i].max_temp != undefined &&
-        response.data.list[i].min_temp != undefined
-      ) {
-        datesArrOfObj[datesArrOfObj.length - 1].tempMax.push(
-          response.data.list[i].main.temp_max
-        )
-        datesArrOfObj[datesArrOfObj.length - 1].tempMin.push(
-          response.data.list[i].main.temp_min
-        )
-      }
-    }
-    for (let j = 0; j < datesArrOfObj.length; j++) {
-      storeMaxMinForecasts(datesArrOfObj[j].tempMin, datesArrOfObj[j].tempMax)
-    }
-    console.log(datesArrOfObj)
-    console.log(forecastMaxMinData)
-  }
-
-  return {
-    maxMin: findMaxMin,
-    maxMinArray: forecastMaxMinData,
-  }
-})()
