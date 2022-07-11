@@ -66,7 +66,7 @@
     </div>
       <div
       class="container today"
-      id="todayBlock">
+      id="todayBlock" hidden>
       <div class="overview row align-items-center">
         <div class="col-6">
         <h2 id="chosenCity">Melbs
@@ -83,10 +83,6 @@
         </ul>
       </div>
       <div class="col-6">
-        <div class="row">
-          <div class="col-6 today-max">Max<div><span id="todayMax"></span>°</div></div>
-          <div class="col-6 today-min">Min<div><span id="todayMin"></span>°</div></div>
-      </div>
       </div>
       </div>
       <div class="row today-forecast">
@@ -120,7 +116,7 @@
         </div>
       </div>
     </div>
-    <div class="forecast-block" id="forecastBlock">
+    <div class="forecast-block" id="forecastBlock" hidden>
       <div class="btn-group" role="group" aria-label="Basic example">
         <button type="button" class="btn btn-light" data-bs-toggle="collapse" data-bs-target="#collapsedOne">
           <!-- forecast day 1 -->

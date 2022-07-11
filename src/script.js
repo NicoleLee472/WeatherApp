@@ -91,12 +91,8 @@ let Temperatures = (function () {
   let displayTodayTemperatures = function () {
     if (isCelsius) {
       Elements.todayObj.currentTemp.innerHTML = Fetch.todaysDataObj.currentTempC
-      Elements.todayObj.maxTemp.innerHTML = Fetch.todaysDataObj.maxTempC
-      Elements.todayObj.minTemp.innerHTML = Fetch.todaysDataObj.minTempC
     } else {
       Elements.todayObj.currentTemp.innerHTML = Fetch.todaysDataObj.currentTempF
-      Elements.todayObj.maxTemp.innerHTML = Fetch.todaysDataObj.maxTempF
-      Elements.todayObj.minTemp.innerHTML = Fetch.todaysDataObj.minTempF
     }
   }
 
@@ -263,7 +259,6 @@ let Fetch = (function () {
   let todayDate = Dates.currentDate
 
   let storeForecastData = function (response) {
-    console.log(response)
     var previousDate = 0
     for (let i = 0; i < response.data.cnt; i++) {
       let dateToTest = new Date(response.data.list[i].dt * 1000).getDate()
@@ -303,11 +298,11 @@ let Fetch = (function () {
           ]
         }@2x.png`,
       })
-      forecastDisplayData[i].maxTempF = HelperFunctions.convertToFahrenheit(
-        forecastDisplayData[i].maxTempC
+      forecastDisplayData[i].maxTempF = Math.round(
+        HelperFunctions.convertToFahrenheit(forecastDisplayData[i].maxTempC)
       )
-      forecastDisplayData[i].minTempF = HelperFunctions.convertToFahrenheit(
-        forecastDisplayData[i].minTempC
+      forecastDisplayData[i].minTempF = Math.round(
+        HelperFunctions.convertToFahrenheit(forecastDisplayData[i].minTempC)
       )
     }
     Display.forecastData()
@@ -426,25 +421,7 @@ let Display = (function () {
   }
 })()
 
-/* let ChooseTempScale = (function () {
-  let clickCelsius = document.querySelector('#temperatureScaleC')
-  let clickFahrenheit = document.querySelector('#temperatureScaleF')
-
-  clickFahrenheit.addEventListener(
-    'click',
-    HelperFunctions.preventDefault(Temperatures.setFahrenheitScale)
-  )
-  clickCelsius.addEventListener(
-    'click',
-    HelperFunctions.preventDefault(Temperatures.setCelsiusScale)
-  )
-  return {
-    celsius: clickCelsius,
-    fahrenheit: clickFahrenheit,
-  }
-})() */
-
-/* let PageBackground = (function () {
+let PageBackground = (function () {
   let changeBackground = function (response) {
     document.body.style.backgroundRepeat = 'no-repeat'
     document.body.style.backgroundSize = 'cover'
@@ -456,4 +433,4 @@ let Display = (function () {
       'https://api.nasa.gov/planetary/apod?api_key=dMXgU9tfrbn6VvKiYo4jnOhZtHTiC0ZMyjGmrsqg'
     )
     .then(changeBackground)
-})() */
+})()
