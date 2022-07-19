@@ -1,6 +1,6 @@
 # WeatherApp
 
-Weather App using JS, CSS, HTML, Bootstrap, Open Weather API
+Weather App using Valilla JS, CSS, HTML, Bootstrap, Open Weather API
 
 This is the final assignment for the SheCdoes Plus online coding course.
 
