@@ -320,7 +320,6 @@ let Fetch = (function () {
         HelperFunctions.convertToFahrenheit(forecastDisplayData[i].minTempC)
       )
     }
-    console.log(rawForecastData)
     Display.forecastData(forecastDisplayData)
   }
 
