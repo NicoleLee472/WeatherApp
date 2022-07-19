@@ -70,8 +70,6 @@ let Elements = (function () {
     forecastMax: document.querySelector('#forecastMax5'),
   }
 
-  var forecastElementsArrayOfObjects = [{}, {}, {}, {}, {}]
-
   return {
     todayObj: todayObject,
     forecastDay1: forecast1,
@@ -95,58 +93,64 @@ let Temperatures = (function () {
       Elements.todayObj.currentTemp.innerHTML = Fetch.todaysDataObj.currentTempF
     }
   }
-
-  let displayForecastTemperatures = function () {
+  var forecastDisplayData = []
+  let displayForecastTemperatures = function (
+    forecastDataArgument = [],
+    isNewSearch = false
+  ) {
+    if (isNewSearch) {
+      forecastDisplayData = forecastDataArgument
+    }
     if (isCelsius) {
       Elements.forecastDay1.forecastMax.innerHTML =
-        Fetch.forecastDataArrOfObj[0].maxTempC
+        forecastDisplayData[0].maxTempC
       Elements.forecastDay1.forecastMin.innerHTML =
-        Fetch.forecastDataArrOfObj[0].minTempC
+        forecastDisplayData[0].minTempC
 
       Elements.forecastDay2.forecastMax.innerHTML =
-        Fetch.forecastDataArrOfObj[1].maxTempC
+        forecastDisplayData[1].maxTempC
       Elements.forecastDay2.forecastMin.innerHTML =
-        Fetch.forecastDataArrOfObj[1].minTempC
+        forecastDisplayData[1].minTempC
 
       Elements.forecastDay3.forecastMax.innerHTML =
-        Fetch.forecastDataArrOfObj[2].maxTempC
+        forecastDisplayData[2].maxTempC
       Elements.forecastDay3.forecastMin.innerHTML =
-        Fetch.forecastDataArrOfObj[2].minTempC
+        forecastDisplayData[2].minTempC
 
       Elements.forecastDay4.forecastMax.innerHTML =
-        Fetch.forecastDataArrOfObj[3].maxTempC
+        forecastDisplayData[3].maxTempC
       Elements.forecastDay4.forecastMin.innerHTML =
-        Fetch.forecastDataArrOfObj[3].minTempC
+        forecastDisplayData[3].minTempC
 
       Elements.forecastDay5.forecastMax.innerHTML =
-        Fetch.forecastDataArrOfObj[4].maxTempC
+        forecastDisplayData[4].maxTempC
       Elements.forecastDay5.forecastMin.innerHTML =
-        Fetch.forecastDataArrOfObj[4].minTempC
+        forecastDisplayData[4].minTempC
     } else {
       Elements.forecastDay1.forecastMax.innerHTML =
-        Fetch.forecastDataArrOfObj[0].maxTempF
+        forecastDisplayData[0].maxTempF
       Elements.forecastDay1.forecastMin.innerHTML =
-        Fetch.forecastDataArrOfObj[0].minTempF
+        forecastDisplayData[0].minTempF
 
       Elements.forecastDay2.forecastMax.innerHTML =
-        Fetch.forecastDataArrOfObj[1].maxTempF
+        forecastDisplayData[1].maxTempF
       Elements.forecastDay2.forecastMin.innerHTML =
-        Fetch.forecastDataArrOfObj[1].minTempF
+        forecastDisplayData[1].minTempF
 
       Elements.forecastDay3.forecastMax.innerHTML =
-        Fetch.forecastDataArrOfObj[2].maxTempF
+        forecastDisplayData[2].maxTempF
       Elements.forecastDay3.forecastMin.innerHTML =
-        Fetch.forecastDataArrOfObj[2].minTempF
+        forecastDisplayData[2].minTempF
 
       Elements.forecastDay4.forecastMax.innerHTML =
-        Fetch.forecastDataArrOfObj[3].maxTempF
+        forecastDisplayData[3].maxTempF
       Elements.forecastDay4.forecastMin.innerHTML =
-        Fetch.forecastDataArrOfObj[3].minTempF
+        forecastDisplayData[3].minTempF
 
       Elements.forecastDay5.forecastMax.innerHTML =
-        Fetch.forecastDataArrOfObj[4].maxTempF
+        forecastDisplayData[4].maxTempF
       Elements.forecastDay5.forecastMin.innerHTML =
-        Fetch.forecastDataArrOfObj[4].minTempF
+        forecastDisplayData[4].minTempF
     }
   }
 
@@ -255,19 +259,29 @@ let Fetch = (function () {
     Display.todayData()
   }
 
-  var forecastArrOfObjects = []
   let todayDate = Dates.currentDate
 
-  let storeForecastData = function (response) {
+  let createForecastApiCall = function (response) {
+    axios
+      .get(
+        `${forecastWeatherUrl}lat=${response.data.coord.lat}&lon=${response.data.coord.lon}&appid=${apiKey}&units=metric`
+      )
+      .then(storeRawForecastData)
+  }
+
+  let storeRawForecastData = function (response) {
+    var forecastArrOfObjects = []
     var previousDate = 0
     for (let i = 0; i < response.data.cnt; i++) {
       let dateToTest = new Date(response.data.list[i].dt * 1000).getDate()
+      let nameOfDay = new Date(response.data.list[i].dt * 1000).getDay()
       if (dateToTest != todayDate) {
         if (dateToTest != previousDate) {
           forecastArrOfObjects.push({
             maxTemps: [response.data.list[i].main.temp_max],
             minTemps: [response.data.list[i].main.temp_min],
             emojis: [response.data.list[i].weather[0].icon],
+            dayNumber: nameOfDay,
           })
           previousDate = dateToTest
         } else {
@@ -283,20 +297,21 @@ let Fetch = (function () {
         }
       }
     }
-    storeMaxMinData()
+    storeForecastData(forecastArrOfObjects)
   }
 
-  let forecastDisplayData = []
-  let storeMaxMinData = function () {
-    for (let i = 0; i < forecastArrOfObjects.length; i++) {
+  let storeForecastData = function (rawForecastData) {
+    var forecastDisplayData = []
+    for (let i = 0; i < rawForecastData.length; i++) {
       forecastDisplayData.push({
-        maxTempC: Math.round(Math.max(...forecastArrOfObjects[i].maxTemps)),
-        minTempC: Math.round(Math.min(...forecastArrOfObjects[i].minTemps)),
+        maxTempC: Math.round(Math.max(...rawForecastData[i].maxTemps)),
+        minTempC: Math.round(Math.min(...rawForecastData[i].minTemps)),
         emoji: `http://openweathermap.org/img/wn/${
-          forecastArrOfObjects[i].emojis[
-            Math.round(forecastArrOfObjects[i].emojis.length / 2)
+          rawForecastData[i].emojis[
+            Math.round(rawForecastData[i].emojis.length / 2)
           ]
         }@2x.png`,
+        dayName: HelperFunctions.day[rawForecastData[i].dayNumber],
       })
       forecastDisplayData[i].maxTempF = Math.round(
         HelperFunctions.convertToFahrenheit(forecastDisplayData[i].maxTempC)
@@ -305,7 +320,7 @@ let Fetch = (function () {
         HelperFunctions.convertToFahrenheit(forecastDisplayData[i].minTempC)
       )
     }
-    Display.forecastData()
+    Display.forecastData(forecastDisplayData)
   }
 
   //weather data for searched city
@@ -318,25 +333,23 @@ let Fetch = (function () {
       .then(storeTodayWeatherData)
     axios
       .get(
-        `${forecastWeatherUrl}q=${requestedCity.value}&appid=${apiKey}&units=metric`
+        `${todayWeatherUrl}q=${requestedCity.value}&appid=${apiKey}&units=metric`
       )
-      .then(storeForecastData)
+      .then(createForecastApiCall)
   }
   //current location using browser lat and lon
 
   let currentLocationApiCalls = function (position) {
-    var lon = position.coords.longitude
-    var lat = position.coords.latitude
     axios
       .get(
-        `${todayWeatherUrl}lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
+        `${todayWeatherUrl}lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`
       )
       .then(storeTodayWeatherData)
     axios
       .get(
-        `${forecastWeatherUrl}lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
+        `${forecastWeatherUrl}lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`
       )
-      .then(storeForecastData)
+      .then(storeRawForecastData)
   }
 
   let getCurrentUserGps = function () {
@@ -347,7 +360,6 @@ let Fetch = (function () {
     userGps: getCurrentUserGps,
     searchApiCall: searchWeatherApiCalls,
     todaysDataObj: todayDataObj,
-    forecastDataArrOfObj: forecastDisplayData,
   }
 })()
 
@@ -389,28 +401,23 @@ let Display = (function () {
     Dates.displayDates()
   }
 
-  let showForecastData = function () {
-    Temperatures.displayForecastTemps()
+  let showForecastData = function (forecastDisplayData) {
+    Temperatures.displayForecastTemps(forecastDisplayData, true)
 
-    Elements.forecastDay1.dayName.innerHTML =
-      HelperFunctions.day[Dates.currentDayNumeric + 1]
-    Elements.forecastDay1.emoji.src = Fetch.forecastDataArrOfObj[0].emoji
+    Elements.forecastDay1.dayName.innerHTML = forecastDisplayData[0].dayName
+    Elements.forecastDay1.emoji.src = forecastDisplayData[0].emoji
 
-    Elements.forecastDay2.dayName.innerHTML =
-      HelperFunctions.day[Dates.currentDayNumeric + 2]
-    Elements.forecastDay2.emoji.src = Fetch.forecastDataArrOfObj[1].emoji
+    Elements.forecastDay2.dayName.innerHTML = forecastDisplayData[1].dayName
+    Elements.forecastDay2.emoji.src = forecastDisplayData[1].emoji
 
-    Elements.forecastDay3.dayName.innerHTML =
-      HelperFunctions.day[Dates.currentDayNumeric + 3]
-    Elements.forecastDay3.emoji.src = Fetch.forecastDataArrOfObj[2].emoji
+    Elements.forecastDay3.dayName.innerHTML = forecastDisplayData[2].dayName
+    Elements.forecastDay3.emoji.src = forecastDisplayData[2].emoji
 
-    Elements.forecastDay4.dayName.innerHTML =
-      HelperFunctions.day[Dates.currentDayNumeric + 4]
-    Elements.forecastDay4.emoji.src = Fetch.forecastDataArrOfObj[3].emoji
+    Elements.forecastDay4.dayName.innerHTML = forecastDisplayData[3].dayName
+    Elements.forecastDay4.emoji.src = forecastDisplayData[3].emoji
 
-    Elements.forecastDay5.dayName.innerHTML =
-      HelperFunctions.day[Dates.currentDayNumeric + 5]
-    Elements.forecastDay5.emoji.src = Fetch.forecastDataArrOfObj[4].emoji
+    Elements.forecastDay5.dayName.innerHTML = forecastDisplayData[4].dayName
+    Elements.forecastDay5.emoji.src = forecastDisplayData[4].emoji
 
     forecastBlock.hidden = false
     Dates.displayDates()
